@@ -45,68 +45,67 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Adventurer")
 	void SetAdventurerAbilityScores(int Str, int Dex, int Con, int Int, int Wis, int Cha);
 
-
 	UPROPERTY(BlueprintReadOnly)
 	int PointsRemaining = 27;
-
-	UPROPERTY(BlueprintReadOnly)
-	FString Name = "";
-
-	UPROPERTY(BlueprintReadOnly)
-	FString PronounHe = "";
-
-	UPROPERTY(BlueprintReadOnly)
-	FString PronounHim = "";
-
-	UPROPERTY(BlueprintReadOnly)
-	FString PronounHis = "";
-
-	UPROPERTY(BlueprintReadOnly)
-	FString CharRace = "";
-
-	UPROPERTY(BlueprintReadOnly)
-	FString CharClass = "";
-
-
-	UPROPERTY(BlueprintReadOnly)
-	int Level = 1;
-
-	UPROPERTY(BlueprintReadOnly)
-	int Xp = 0;
-
-	UPROPERTY(BlueprintReadOnly)
-	int Gold = 25;
-
-	// Ability Scores
-	UPROPERTY(VisibleAnywhere)
-	int Str = 8;
-	UPROPERTY(VisibleAnywhere)
-	int Dex = 8;
-	UPROPERTY(VisibleAnywhere)
-	int Con = 8;
-	UPROPERTY(VisibleAnywhere)
-	int Int = 8;
-	UPROPERTY(VisibleAnywhere)
-	int Wis = 8;
-	UPROPERTY(VisibleAnywhere)
-	int Cha = 8;
-
-	// Ability Modifiers
-	UPROPERTY(VisibleAnywhere)
-	int StrMod = -1;
-	UPROPERTY(VisibleAnywhere)
-	int DexMod = -1;
-	UPROPERTY(VisibleAnywhere)
-	int ConMod = -1;
-	UPROPERTY(VisibleAnywhere)
-	int IntMod = -1;
-	UPROPERTY(VisibleAnywhere)
-	int WisMod = -1;
-	UPROPERTY(VisibleAnywhere)
-	int ChaMod = -1;
 
 private:
 	int CalculateAbilityModifier(int AbilityScore);
 
 	void UpdateModifiers();
+
+	UPROPERTY(EditAnywhere)
+	FString Name = "";
+
+	UPROPERTY(EditAnywhere)
+	FString PronounHe = "";
+
+	UPROPERTY(EditAnywhere)
+	FString PronounHim = "";
+
+	UPROPERTY(EditAnywhere)
+	FString PronounHis = "";
+
+	UPROPERTY(EditAnywhere)
+	FString CharRace = "";
+
+	UPROPERTY(EditAnywhere)
+	FString CharClass = "";
+
+
+	UPROPERTY(EditAnywhere)
+	int Level = 1;
+
+	UPROPERTY(EditAnywhere)
+	int Xp = 0;
+
+public:
+	// Ability Scores
+	UPROPERTY(EditAnywhere)
+	int Str = 8;
+	UPROPERTY(EditAnywhere)
+	int Dex = 8;
+	UPROPERTY(EditAnywhere)
+	int Con = 8;
+	UPROPERTY(EditAnywhere)
+	int Int = 8;
+	UPROPERTY(EditAnywhere)
+	int Wis = 8;
+	UPROPERTY(EditAnywhere)
+	int Cha = 8;
+
+	// Ability Modifiers
+	UPROPERTY(EditAnywhere)
+	int StrMod = -1;
+	UPROPERTY(EditAnywhere)
+	int DexMod = -1;
+	UPROPERTY(EditAnywhere)
+	int ConMod = -1;
+	UPROPERTY(EditAnywhere)
+	int IntMod = -1;
+	UPROPERTY(EditAnywhere)
+	int WisMod = -1;
+	UPROPERTY(EditAnywhere)
+	int ChaMod = -1;
+
+
 };
