@@ -17,7 +17,7 @@ ADummyAdventurer::ADummyAdventurer()
 	AdventurerWeaponMesh->bForceNavigationObstacle = false;
 	
 
-	SpringArm = CreateAbstractDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(AdventurerMesh);
 	const FTransform ArmTransform = FTransform(
 		FRotator(0.f, -90.f, 0.f),

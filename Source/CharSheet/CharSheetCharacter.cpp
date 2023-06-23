@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
+#include "UIManager.h"
 
 ACharSheetCharacter::ACharSheetCharacter()
 {
@@ -43,6 +44,9 @@ ACharSheetCharacter::ACharSheetCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	// Set up UI Manager
+	UIManager = CreateDefaultSubobject<UUIManager>(TEXT("UIManager"));
 }
 
 void ACharSheetCharacter::Tick(float DeltaSeconds)
