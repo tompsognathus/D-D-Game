@@ -23,9 +23,11 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	/** UI Manager and Widgets **/
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI")
 	class UUIManager* UIManager;
 
 	/** Adventurer **/
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI")
 	class UAdventurer* Adventurer;
 
 

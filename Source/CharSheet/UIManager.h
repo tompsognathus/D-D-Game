@@ -24,8 +24,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-private:
-	UUserWidget* CharConfiguratorWidgetInstance;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI")
+	class UCharacterCreatorWidget* CharacterCreatorWidget;
 
-	void SpawnWidget(FString Path, UUserWidget* UserWidgetOUT);
+
 };

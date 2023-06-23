@@ -11,6 +11,7 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 #include "UIManager.h"
+#include "Adventurer.h"
 
 ACharSheetCharacter::ACharSheetCharacter()
 {
@@ -46,7 +47,12 @@ ACharSheetCharacter::ACharSheetCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
 	// Set up UI Manager
-	UIManager = CreateDefaultSubobject<UUIManager>(TEXT("UIManager"));
+	UIManager = CreateDefaultSubobject<UUIManager>(TEXT("UI Manager"));
+	
+	// Set up Adventurer
+	Adventurer = CreateDefaultSubobject<UAdventurer>(TEXT("Adventurer"));
+
+
 }
 
 void ACharSheetCharacter::Tick(float DeltaSeconds)
