@@ -28,15 +28,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<class UUserWidget> CharacterCreatorWidgetRef;
 
-	UFUNCTION()
-	void HideAllWidgets();
 
 private:
+	void CreateAndDisplayCharacterCreatorWidget();
 	void GetAdventurerReference();
-	void CreateMyWidget(TSubclassOf<UUserWidget> WidgetRef, UUserWidget*& Widget);
-	void DisplayWidget(UUserWidget*& Widget);
-
-
 
 	// Adventurer class
 	class UAdventurer* Adventurer;

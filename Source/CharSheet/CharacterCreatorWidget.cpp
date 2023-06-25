@@ -7,6 +7,7 @@
 #include "Components/ComboBoxString.h"
 #include "Components/EditableText.h"
 #include "Adventurer.h"
+#include "UIManager.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -193,6 +194,13 @@ void UCharacterCreatorWidget::OnSubmitBtnClicked()
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Adventurer component not found"));
+	}
+
+	// Call UIManager's function on player
+	UUIManager* UIManager = PlayerPawn->FindComponentByClass<UUIManager>();
+	if (UIManager)
+	{
+		UIManager->HideAllWidgets();
 	}
 }
 

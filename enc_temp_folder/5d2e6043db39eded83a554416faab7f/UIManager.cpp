@@ -23,8 +23,7 @@ void UUIManager::BeginPlay()
 	Super::BeginPlay();
 
 	GetAdventurerReference();
-	CreateMyWidget(CharacterCreatorWidgetRef, CharacterCreatorWidget);
-	DisplayWidget(CharacterCreatorWidget);
+	CreateAndDisplayCharacterCreatorWidget();
 
 }
 
@@ -36,37 +35,34 @@ void UUIManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 }
 
-void UUIManager::HideAllWidgets()
+void UUIManager::CreateAndDisplayCharacterCreatorWidget()
 {
-	if (CharacterCreatorWidget)
-	{
-		CharacterCreatorWidget->RemoveFromParent();
-	}
-}
-
-void UUIManager::CreateMyWidget(TSubclassOf<class UUserWidget> WidgetRef, UUserWidget*& Widget)
-{
-	if (WidgetRef) // Check if the Asset is assigned in the blueprint.
+	if (CharacterCreatorWidgetRef) // Check if the Asset is assigned in the blueprint.
 	{
 		// Create the widget and store it.
-		Widget = CreateWidget<UUserWidget>(GetWorld(), WidgetRef);
+		CharacterCreatorWidget = CreateWidget<UUserWidget>(GetWorld(), CharacterCreatorWidgetRef);
+
+		// now you can use the widget directly since you have a referance for it.
+		// Extra check to  make sure the pointer holds the widget.
+		if (CharacterCreatorWidget)
+		{
+			//let add it to the view port
+			CharacterCreatorWidget->AddToViewport();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Cannot add CharacterCreatorWidget to Viewport"));
+		}
+		//Show the Cursor.
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		if (PlayerController)
+		{
+			PlayerController->bShowMouseCursor = true;
+		}
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("CharacterCreatorWidgetRef on UIManager not set in blueprint"));
-	}
-}
-
-void UUIManager::DisplayWidget(UUserWidget*& Widget)
-{
-	HideAllWidgets();
-	if (Widget)
-	{
-		Widget->AddToViewport();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Cannot add CharacterCreatorWidget to Viewport"));
 	}
 }
 
