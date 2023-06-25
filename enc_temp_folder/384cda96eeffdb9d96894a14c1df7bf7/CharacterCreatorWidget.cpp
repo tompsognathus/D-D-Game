@@ -5,10 +5,7 @@
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
 #include "Components/ComboBoxString.h"
-#include "Components/EditableText.h"
 #include "Adventurer.h"
-#include "Kismet/GameplayStatics.h"
-
 
 
 void UCharacterCreatorWidget::NativeConstruct()
@@ -17,12 +14,8 @@ void UCharacterCreatorWidget::NativeConstruct()
 
 	// Bind delegates
 	SubmitBtn->OnClicked.AddDynamic(this, &UCharacterCreatorWidget::OnSubmitBtnClicked);
-	RaceComboBox->OnSelectionChanged.AddDynamic(this, &UCharacterCreatorWidget::OnRaceSelectionChanged);
-	ClassComboBox->OnSelectionChanged.AddDynamic(this, &UCharacterCreatorWidget::OnClassSelectionChanged);
-	NameEditableText->OnTextChanged.AddDynamic(this, &UCharacterCreatorWidget::OnNameTextChanged);
-	PronounHeEditableText->OnTextChanged.AddDynamic(this, &UCharacterCreatorWidget::OnPronounHeChanged);
-	PronounHimEditableText->OnTextChanged.AddDynamic(this, &UCharacterCreatorWidget::OnPronounHimChanged);
-	PronounHisEditableText->OnTextChanged.AddDynamic(this, &UCharacterCreatorWidget::OnPronounHisChanged);
+	//RaceComboBox->OnSelectionChanged.AddDynamic(this, &UCharacterCreatorWidget::OnRaceSelectionChanged);
+	//ClassComboBox->OnSelectionChanged.AddDynamic(this, &UCharacterCreatorWidget::OnClassSelectionChanged);
 
 	// Set default values
 	DisplayAbilityScoresAndUpdateModifiers(8, 8, 8, 8, 8, 8);
@@ -122,69 +115,17 @@ void UCharacterCreatorWidget::SetPointBuyText(int NewScore)
 	}
 }
 
-
-// React to UI Interactions
 void UCharacterCreatorWidget::OnSubmitBtnClicked()
 {
 	UE_LOG(LogTemp, Display, TEXT("Submit button clicked"));
-	// Get reference to Adventurer component from player character
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	APawn* PlayerPawn = PlayerController->GetPawn();
-	UAdventurer* Adventurer = PlayerPawn->FindComponentByClass<UAdventurer>();
-
-	// Set variables in Adventurer compoenent
-	if (Adventurer)
-	{
-		// Ability scores
-		Adventurer->SetAdventurerAbilityScores(StrScore, DexScore, ConScore, IntScore, WisScore, ChaScore);
-		// Ability modifiers are updated automatically whenever an ability score is set
-	
-		// Race & Class
-		Adventurer->SetAdventurerRace(SelectedRace);
-		Adventurer->SetAdventurerClass(SelectedClass);
-
-		// Name & Pronouns
-		Adventurer->SetAdventurerName(Name);
-		Adventurer->SetAdventurerPronouns(PronounHe, PronounHim, PronounHis);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Adventurer component not found"));
-	}
 }
 
 void UCharacterCreatorWidget::OnRaceSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectType)
 {
 	UE_LOG(LogTemp, Display, TEXT("Race selection changed"));
-	SelectedRace = SelectedItem;
 }
 
 void UCharacterCreatorWidget::OnClassSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectType)
 {
 	UE_LOG(LogTemp, Display, TEXT("Class selection changed"));
-	SelectedClass = SelectedItem;
-}
-
-void UCharacterCreatorWidget::OnNameTextChanged(const FText& Text)
-{
-	UE_LOG(LogTemp, Display, TEXT("Name text changed"));
-	Name = Text.ToString();
-}
-
-void UCharacterCreatorWidget::OnPronounHeChanged(const FText& Text)
-{
-	UE_LOG(LogTemp, Display, TEXT("Pronoun He text changed"));
-	PronounHe = Text.ToString();
-}
-
-void UCharacterCreatorWidget::OnPronounHimChanged(const FText& Text)
-{
-	UE_LOG(LogTemp, Display, TEXT("Pronoun Him text changed"));
-	PronounHim = Text.ToString();
-}
-
-void UCharacterCreatorWidget::OnPronounHisChanged(const FText& Text)
-{
-	UE_LOG(LogTemp, Display, TEXT("Pronoun His text changed"));
-	PronounHis = Text.ToString();
 }

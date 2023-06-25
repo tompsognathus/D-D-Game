@@ -28,7 +28,13 @@ public:
 	void SetAdventurerName(FString NewName);
 
 	UFUNCTION(BlueprintCallable, Category = "Adventurer")
-	void SetAdventurerPronouns(FString NewHe, FString NewHim, FString NewHis);
+	void SetAdventurerPronounHe(FString NewName);
+
+	UFUNCTION(BlueprintCallable, Category = "Adventurer")
+	void SetAdventurerPronounHim(FString NewName);
+
+	UFUNCTION(BlueprintCallable, Category = "Adventurer")
+	void SetAdventurerPronounHis(FString NewName);
 
 	UFUNCTION(BlueprintCallable, Category = "Adventurer")
 	void SetAdventurerRace(FString NewRace);
@@ -43,22 +49,22 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	int PointsRemaining = 27;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FString Name = "Bilbo Baggins";
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FString PronounHe = "";
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FString PronounHim = "";
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FString PronounHis = "";
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FString CharRace = "";
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FString CharClass = "";
 
 
@@ -71,20 +77,19 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	int Gold = 25;
 
-private:
 	// Ability Scores
 	UPROPERTY(VisibleAnywhere)
-		int Str = 8;
+	int Str = 8;
 	UPROPERTY(VisibleAnywhere)
-		int Dex = 8;
+	int Dex = 8;
 	UPROPERTY(VisibleAnywhere)
-		int Con = 8;
+	int Con = 8;
 	UPROPERTY(VisibleAnywhere)
-		int Int = 8;
+	int Int = 8;
 	UPROPERTY(VisibleAnywhere)
-		int Wis = 8;
+	int Wis = 8;
 	UPROPERTY(VisibleAnywhere)
-		int Cha = 8;
+	int Cha = 8;
 
 	// Ability Modifiers
 	UPROPERTY(VisibleAnywhere)
@@ -100,6 +105,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	int ChaMod = -1;
 
+private:
 	int CalculateAbilityModifier(int AbilityScore);
 
 	void UpdateModifiers();

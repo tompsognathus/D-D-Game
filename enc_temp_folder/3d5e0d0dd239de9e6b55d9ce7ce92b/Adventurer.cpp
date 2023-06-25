@@ -30,11 +30,19 @@ void UAdventurer::SetAdventurerName(FString NewName)
 	Name = NewName;
 }
 
-void UAdventurer::SetAdventurerPronouns(FString NewHe, FString NewHim, FString NewHis)
+void UAdventurer::SetAdventurerPronounHe(FString NewPronoun)
 {
-	PronounHe = NewHe;
-	PronounHim = NewHim;
-	PronounHis = NewHis;
+	PronounHe = NewPronoun;
+}
+
+void UAdventurer::SetAdventurerPronounHim(FString NewPronoun)
+{
+	PronounHim = NewPronoun;
+}
+
+void UAdventurer::SetAdventurerPronounHis(FString NewPronoun)
+{
+	PronounHis = NewPronoun;
 }
 
 void UAdventurer::SetAdventurerClass(FString NewCharClass)

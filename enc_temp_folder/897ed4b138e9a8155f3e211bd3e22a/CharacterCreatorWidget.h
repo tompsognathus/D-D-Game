@@ -24,16 +24,6 @@ private:
 	int WisScore = 0;
 	int ChaScore = 0;
 
-	FString SelectedRace = "";
-	FString SelectedClass = "";
-
-	FString Name = "";
-
-	FString PronounHe = "";
-	FString PronounHim = "";
-	FString PronounHis = "";
-
-
 protected:
 	// Doing setup in the C++ constructor is not as
 	// useful as using NativeConstruct.
@@ -53,14 +43,6 @@ protected:
 	void OnRaceSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectType);
 	UFUNCTION()
 	void OnClassSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectType);
-	UFUNCTION()
-	void OnNameTextChanged(const FText& Text);
-	UFUNCTION()
-	void OnPronounHeChanged(const FText& Text);
-	UFUNCTION()
-	void OnPronounHimChanged(const FText& Text);
-	UFUNCTION()
-	void OnPronounHisChanged(const FText& Text);
 
 	// Ability scores
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
@@ -99,19 +81,10 @@ protected:
 	class UButton* SubmitBtn;
 
 	// Race & Class Selectors
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UComboBoxString* RaceComboBox;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UComboBoxString* ClassComboBox;
 
 	// Text fields for name etc
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UEditableText* NameEditableText;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UEditableText* PronounHeEditableText;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UEditableText* PronounHimEditableText;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UEditableText* PronounHisEditableText;
+
 
 };

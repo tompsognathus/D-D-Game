@@ -24,8 +24,20 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI")
-	class UCharacterCreatorWidget* CharacterCreatorWidget;
+	// Character Creator Widget Blueprint - Reference UMG Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class UUserWidget> CharacterCreatorWidgetRef;
+
+
+private:
+	void CreateAndDisplayCharacterCreatorWidget();
+	void GetAdventurerReference();
+
+	// Adventurer class
+	class UAdventurer* Adventurer;
+
+	// Variable to hold the Character Creator Widget After Creating it
+	UUserWidget* CharacterCreatorWidget;
 
 
 };
