@@ -43,10 +43,10 @@ void UCharacterCreatorWidget::NativeConstruct()
 	ChaBtnUp->OnClicked.AddDynamic(this, &UCharacterCreatorWidget::OnChaBtnUpClicked);
 	ChaBtnDown->OnClicked.AddDynamic(this, &UCharacterCreatorWidget::OnChaBtnDownClicked);
 
+
 	// Set default values
 	DisplayAbilityScoresAndUpdateModifiers();
 	SetPointBuyText(27);
-
 }
 
 // Ability Scores & Modifiers
@@ -200,7 +200,7 @@ void UCharacterCreatorWidget::OnSubmitBtnClicked()
 	UUIManager* UIManager = PlayerPawn->FindComponentByClass<UUIManager>();
 	if (UIManager)
 	{
-		UIManager->HideAllWidgets();
+		UIManager->DisplayRPEncounterUI();
 	}
 }
 

@@ -23,8 +23,7 @@ void UUIManager::BeginPlay()
 	Super::BeginPlay();
 
 	GetAdventurerReference();
-	CreateMyWidget(CharacterCreatorWidgetRef, CharacterCreatorWidget);
-	DisplayWidget(CharacterCreatorWidget);
+	DisplayCharacterCreatorUI();
 
 }
 
@@ -43,6 +42,25 @@ void UUIManager::HideAllWidgets()
 		CharacterCreatorWidget->RemoveFromParent();
 	}
 }
+
+void UUIManager::DisplayCharacterCreatorUI()
+{
+	if (!CharacterCreatorWidget)
+	{
+		CreateMyWidget(CharacterCreatorWidgetRef, CharacterCreatorWidget);
+	}
+	DisplayWidget(CharacterCreatorWidget);
+}
+
+void UUIManager::DisplayRPEncounterUI()
+{
+	if (!RPEncounterWidget)
+	{
+		CreateMyWidget(RPEncounterWidgetRef, RPEncounterWidget);
+	}
+	DisplayWidget(RPEncounterWidget);
+}
+
 
 void UUIManager::CreateMyWidget(TSubclassOf<class UUserWidget> WidgetRef, UUserWidget*& Widget)
 {

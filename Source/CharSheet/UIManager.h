@@ -28,10 +28,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<class UUserWidget> CharacterCreatorWidgetRef;
 
+	// RP Encounter Widget Blueprint - Reference UMG Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class UUserWidget> RPEncounterWidgetRef;
+
 	UFUNCTION()
-	void HideAllWidgets();
+	void DisplayCharacterCreatorUI();
+	UFUNCTION()
+	void DisplayRPEncounterUI();
 
 private:
+	void HideAllWidgets();
 	void GetAdventurerReference();
 	void CreateMyWidget(TSubclassOf<UUserWidget> WidgetRef, UUserWidget*& Widget);
 	void DisplayWidget(UUserWidget*& Widget);
@@ -44,5 +51,7 @@ private:
 	// Variable to hold the Character Creator Widget After Creating it
 	UUserWidget* CharacterCreatorWidget;
 
+	// Variable to hold the RP Encounter Widget After Creating it
+	UUserWidget* RPEncounterWidget;
 
 };
