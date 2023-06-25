@@ -24,6 +24,8 @@ private:
 	int WisScore = 8;
 	int ChaScore = 8;
 
+	int RemainingPointBuy = 27;
+
 	FString SelectedRace = "";
 	FString SelectedClass = "";
 
@@ -34,19 +36,28 @@ private:
 	FString PronounHis = "";
 
 
+
+
 protected:
 	// Doing setup in the C++ constructor is not as
 	// useful as using NativeConstruct.
 	virtual void NativeConstruct() override;
 
+	// Ability Score Functions
 	void DisplayAbilityScoresAndUpdateModifiers();
 
 	void UpdateAbilityModifiers();
 
 	int CalculateAbilityModifier(int AbilityScore);
 
+	// Point Buy Functions
 	void SetPointBuyText(int NewScore);
 
+	int CalculateRemainingPointBuy();
+
+	int CalculatePointValue(int AbilityScore);
+
+	// UI Elements
 	UFUNCTION()
 	void OnSubmitBtnClicked();
 	UFUNCTION()
@@ -65,6 +76,12 @@ protected:
 	void IncreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn);
 	UFUNCTION()
 	void DecreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn);
+	UFUNCTION()
+	void UpdateAbilityBtnVisibility();
+	UFUNCTION()
+	void UpdateSingleAbilityBtnVisibility(int& AbilityScore, UButton* UpBtn, UButton* DownBtn);
+	UFUNCTION()
+	void UpdatePointBuy();
 
 	UFUNCTION()
 	void OnStrBtnUpClicked();

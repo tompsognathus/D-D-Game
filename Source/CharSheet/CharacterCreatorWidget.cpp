@@ -134,6 +134,37 @@ void UCharacterCreatorWidget::SetPointBuyText(int NewScore)
 	}
 }
 
+int UCharacterCreatorWidget::CalculateRemainingPointBuy()
+{
+	RemainingPointBuy = 27;
+	RemainingPointBuy -= CalculatePointValue(StrScore);
+	RemainingPointBuy -= CalculatePointValue(DexScore);
+	RemainingPointBuy -= CalculatePointValue(ConScore);
+	RemainingPointBuy -= CalculatePointValue(IntScore);
+	RemainingPointBuy -= CalculatePointValue(WisScore);
+	RemainingPointBuy -= CalculatePointValue(ChaScore);
+
+	return RemainingPointBuy;
+}
+
+int UCharacterCreatorWidget::CalculatePointValue(int AbilityScore)
+{
+	int PointValue = 0;
+
+	// start at 9 since 8 is the lowest score and doesn't cost anything
+	for (int i = 9; i <= AbilityScore; i++)
+	{
+		if (i <= 13)
+		{
+			PointValue += 1;
+		}
+		else
+		{
+			PointValue += 2;
+		}
+	}
+	return PointValue;
+}
 
 // React to UI Interactions
 void UCharacterCreatorWidget::OnSubmitBtnClicked()
@@ -207,17 +238,9 @@ void UCharacterCreatorWidget::IncreaseAbilityScore(int& AbilityScore, UButton* U
 	{
 		AbilityScore++;
 		DisplayAbilityScoresAndUpdateModifiers();
-		if (AbilityScore == 9)
-		{
-			// Enable Down button
-			DownBtn->SetIsEnabled(true);
-		}
-		else if (AbilityScore == 15)
-		{
-			// Disable Up button
-			UpBtn->SetIsEnabled(false);
-		}
 	}
+	UpdatePointBuy();
+	UpdateAbilityBtnVisibility();
 }
 
 void UCharacterCreatorWidget::DecreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn)
@@ -226,23 +249,60 @@ void UCharacterCreatorWidget::DecreaseAbilityScore(int& AbilityScore, UButton* U
 	{
 		AbilityScore--;
 		DisplayAbilityScoresAndUpdateModifiers();
-
-		if (AbilityScore == 14)
-		{
-			UpBtn->SetIsEnabled(true);
-		}
-
-		if (AbilityScore == 8)
-		{
-			// Disable Down button
-			DownBtn->SetIsEnabled(false);
-		}
 	}
+	UpdatePointBuy();
+	UpdateAbilityBtnVisibility();
+}
+
+void UCharacterCreatorWidget::UpdateAbilityBtnVisibility()
+{
+	UpdateSingleAbilityBtnVisibility(StrScore, StrBtnUp, StrBtnDown);
+	UpdateSingleAbilityBtnVisibility(DexScore, DexBtnUp, DexBtnDown);
+	UpdateSingleAbilityBtnVisibility(ConScore, ConBtnUp, ConBtnDown);
+	UpdateSingleAbilityBtnVisibility(IntScore, IntBtnUp, IntBtnDown);
+	UpdateSingleAbilityBtnVisibility(WisScore, WisBtnUp, WisBtnDown);
+	UpdateSingleAbilityBtnVisibility(ChaScore, ChaBtnUp, ChaBtnDown);
+}
+
+
+void UCharacterCreatorWidget::UpdateSingleAbilityBtnVisibility(int& AbilityScore, UButton* UpBtn, UButton* DownBtn)
+{
+	// Enable both buttons
+	UpBtn->SetIsEnabled(true);
+	DownBtn->SetIsEnabled(true);
+
+	// Disable Up button if no points remaining
+	if (RemainingPointBuy == 0)
+	{
+		UpBtn->SetIsEnabled(false);
+	}
+	// Disable Up button if score is 15 or higher
+	else if (AbilityScore == 15)
+	{
+		UpBtn->SetIsEnabled(false);
+	}
+	// Disable Up button if score is 13+ and only 1 point remaining (need 2)
+	else if (AbilityScore >= 13 && RemainingPointBuy < 2)
+	{
+		UpBtn->SetIsEnabled(false);
+	}
+	// Disable Down button if score is 8 or lower
+	if (AbilityScore == 8)
+	{
+		DownBtn->SetIsEnabled(false);
+	}
+}
+
+void UCharacterCreatorWidget::UpdatePointBuy()
+{
+	RemainingPointBuy = CalculateRemainingPointBuy();
+	SetPointBuyText(RemainingPointBuy);
 }
 
 void UCharacterCreatorWidget::OnStrBtnUpClicked()
 {
 	IncreaseAbilityScore(StrScore, StrBtnUp, StrBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnStrBtnDownClicked()
