@@ -61,10 +61,6 @@ protected:
 	void OnPronounHimChanged(const FText& Text);
 	UFUNCTION()
 	void OnPronounHisChanged(const FText& Text);
-	UFUNCTION()
-	void IncreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn);
-	UFUNCTION()
-	void DecreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn);
 
 	UFUNCTION()
 	void OnStrBtnUpClicked();
@@ -90,6 +86,36 @@ protected:
 	void OnChaBtnUpClicked();
 	UFUNCTION()
 	void OnChaBtnDownClicked();
+
+
+
+	// Ability scores
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* StrVal;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* DexVal;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* ConVal;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* IntVal;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* WisVal;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* ChaVal;
+
+	// Ability modifiers
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* StrMod;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* DexMod;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* ConMod;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* IntMod;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* WisMod;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* ChaMod;
 
 	// Point Buy
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))

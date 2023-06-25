@@ -201,104 +201,69 @@ void UCharacterCreatorWidget::OnPronounHisChanged(const FText& Text)
 	PronounHis = Text.ToString();
 }
 
-void UCharacterCreatorWidget::IncreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn)
-{
-	if (AbilityScore < 15)
-	{
-		AbilityScore++;
-		DisplayAbilityScoresAndUpdateModifiers();
-		if (AbilityScore == 9)
-		{
-			// Enable Down button
-			DownBtn->SetIsEnabled(true);
-		}
-		else if (AbilityScore == 15)
-		{
-			// Disable Up button
-			UpBtn->SetIsEnabled(false);
-		}
-	}
-}
 
-void UCharacterCreatorWidget::DecreaseAbilityScore(int& AbilityScore, UButton* UpBtn, UButton* DownBtn)
-{
-	if (AbilityScore > 8)
-	{
-		AbilityScore--;
-		DisplayAbilityScoresAndUpdateModifiers();
-
-		if (AbilityScore == 14)
-		{
-			UpBtn->SetIsEnabled(true);
-		}
-
-		if (AbilityScore == 8)
-		{
-			// Disable Down button
-			DownBtn->SetIsEnabled(false);
-		}
-	}
-}
 
 void UCharacterCreatorWidget::OnStrBtnUpClicked()
 {
-	IncreaseAbilityScore(StrScore, StrBtnUp, StrBtnDown);
+	StrScore++;
+	DisplayAbilityScoresAndUpdateModifiers();
+
 }
 
 void UCharacterCreatorWidget::OnStrBtnDownClicked()
 {
-	DecreaseAbilityScore(StrScore, StrBtnUp, StrBtnDown);
+	StrScore--;
+	DisplayAbilityScoresAndUpdateModifiers();
 }
 
 void UCharacterCreatorWidget::OnDexBtnUpClicked()
 {
-	IncreaseAbilityScore(DexScore, DexBtnUp, DexBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnDexBtnDownClicked()
 {
-	DecreaseAbilityScore(DexScore, DexBtnUp, DexBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnConBtnUpClicked()
 {
-	IncreaseAbilityScore(ConScore, ConBtnUp, ConBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnConBtnDownClicked()
 {
-	DecreaseAbilityScore(ConScore, ConBtnUp, ConBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnIntBtnUpClicked()
 {
-	IncreaseAbilityScore(IntScore, IntBtnUp, IntBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnIntBtnDownClicked()
 {
-	DecreaseAbilityScore(IntScore, IntBtnUp, IntBtnDown);
 
 }
 
 void UCharacterCreatorWidget::OnWisBtnUpClicked()
 {
-	IncreaseAbilityScore(WisScore, WisBtnUp, WisBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnWisBtnDownClicked()
 {
-	DecreaseAbilityScore(WisScore, WisBtnUp, WisBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnChaBtnUpClicked()
 {
-	IncreaseAbilityScore(ChaScore, ChaBtnUp, ChaBtnDown);
+
 }
 
 void UCharacterCreatorWidget::OnChaBtnDownClicked()
 {
-	DecreaseAbilityScore(ChaScore, ChaBtnUp, ChaBtnDown);
+
 }
 
 

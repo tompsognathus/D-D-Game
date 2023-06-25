@@ -47,13 +47,13 @@ public:
 	FString Name = "Bilbo Baggins";
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
-	FString PronounHe = "";
+	FString PronounHe = "he";
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
-	FString PronounHim = "";
+	FString PronounHim = "him";
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
-	FString PronounHis = "";
+	FString PronounHis = "his";
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Adventurer Settings")
 	FString CharRace = "";
