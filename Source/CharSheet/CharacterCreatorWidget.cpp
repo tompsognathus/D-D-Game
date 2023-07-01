@@ -9,6 +9,7 @@
 #include "Adventurer.h"
 #include "UIManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "GM.h"
 
 
 
@@ -18,6 +19,7 @@ void UCharacterCreatorWidget::NativeConstruct()
 
 	// Bind delegates
 	SubmitBtn->OnClicked.AddDynamic(this, &UCharacterCreatorWidget::OnSubmitBtnClicked);
+
 	RaceComboBox->OnSelectionChanged.AddDynamic(this, &UCharacterCreatorWidget::OnRaceSelectionChanged);
 	ClassComboBox->OnSelectionChanged.AddDynamic(this, &UCharacterCreatorWidget::OnClassSelectionChanged);
 	NameEditableText->OnTextChanged.AddDynamic(this, &UCharacterCreatorWidget::OnNameTextChanged);
@@ -170,7 +172,6 @@ int UCharacterCreatorWidget::CalculatePointValue(int AbilityScore)
 // React to UI Interactions
 void UCharacterCreatorWidget::OnSubmitBtnClicked()
 {
-	UE_LOG(LogTemp, Display, TEXT("Submit button clicked"));
 	// Get reference to Adventurer component from player character
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	APawn* PlayerPawn = PlayerController->GetPawn();
@@ -191,18 +192,24 @@ void UCharacterCreatorWidget::OnSubmitBtnClicked()
 		Adventurer->SetAdventurerName(Name);
 		Adventurer->SetAdventurerPronouns(PronounHe, PronounHim, PronounHis);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Adventurer component not found"));
-	}
+	else { UE_LOG(LogTemp, Error, TEXT("Adventurer component not found")); }
 
-	// Call UIManager's function on player
+
 	UUIManager* UIManager = PlayerPawn->FindComponentByClass<UUIManager>();
 	if (UIManager)
 	{
-		UIManager->DisplayRPEncounterUI();
-	}
+		AGM* GM = UIManager->GM;
+		if (GM)
+		{
+			GM->StartIncitingIncidentDialogue();
+			UIManager->DisplayRPEncounterUIWidget();
+		}
+
+		else { UE_LOG(LogTemp, Error, TEXT("GM not found")); }
+	} 	else { UE_LOG(LogTemp, Error, TEXT("UIManager not found")); }
 }
+
+
 
 void UCharacterCreatorWidget::OnRaceSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectType)
 {
@@ -368,5 +375,4 @@ void UCharacterCreatorWidget::OnChaBtnDownClicked()
 {
 	DecreaseAbilityScore(ChaScore, ChaBtnUp, ChaBtnDown);
 }
-
 

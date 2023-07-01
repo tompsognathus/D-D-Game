@@ -4,6 +4,8 @@
 #include "UIManager.h"
 #include "Adventurer.h"
 #include "CharacterCreatorWidget.h"
+#include "GM.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values for this component's properties
@@ -22,9 +24,11 @@ void UUIManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetAdventurerReference();
-	DisplayCharacterCreatorUI();
+	CreateGmNpc();
+	CreateAllWidgets();
 
+	GetAdventurerReference();
+	DisplayCharacterCreatorUIWidget();
 }
 
 
@@ -35,32 +39,72 @@ void UUIManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 }
 
+// Spawn GM from blueprint reference
+void UUIManager::CreateGmNpc()
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = GetOwner();
+	GM = GetWorld()->SpawnActor<AGM>(GMBlueprintRef, SpawnParams);
+	if (GM)
+	{
+		GM = Cast<AGM>(UGameplayStatics::GetActorOfClass(GetWorld(), AGM::StaticClass()));
+
+	} else { UE_LOG(LogTemp, Error, TEXT("GM not spawned")); }
+}
+
+void UUIManager::CreateAllWidgets()
+{
+	CreateMyWidget(CharacterCreatorWidgetAssetRef, CharacterCreatorWidgetInstance);
+	CreateMyWidget(RPEncounterWidgetAssetRef, RPEncounterWidgetInstance);
+}
+
 void UUIManager::HideAllWidgets()
 {
-	if (CharacterCreatorWidget)
+	if (CharacterCreatorWidgetInstance)
 	{
-		CharacterCreatorWidget->RemoveFromParent();
+		CharacterCreatorWidgetInstance->RemoveFromParent();
 	}
+	if (RPEncounterWidgetInstance)
+	{
+		RPEncounterWidgetInstance->RemoveFromParent();
+	}
+	UE_LOG(LogTemp, Display, TEXT("Hiding all widgets"));
 }
 
-void UUIManager::DisplayCharacterCreatorUI()
+void UUIManager::DisplayCharacterCreatorUIWidget()
 {
-	if (!CharacterCreatorWidget)
+	HideAllWidgets();
+	if (!CharacterCreatorWidgetInstance)
 	{
-		CreateMyWidget(CharacterCreatorWidgetRef, CharacterCreatorWidget);
+		CreateMyWidget(CharacterCreatorWidgetAssetRef, CharacterCreatorWidgetInstance);
 	}
-	DisplayWidget(CharacterCreatorWidget);
+	DisplayWidget(CharacterCreatorWidgetInstance);
 }
 
-void UUIManager::DisplayRPEncounterUI()
+UCharacterCreatorWidget* UUIManager::GetCharacterCreatorUIWidget()
 {
-	if (!RPEncounterWidget)
+	// get character creator widget from uuserwidget
+	UCharacterCreatorWidget* FoundCharacterCreatorWidget = Cast<UCharacterCreatorWidget>(CharacterCreatorWidgetInstance);
+	if (FoundCharacterCreatorWidget)
 	{
-		CreateMyWidget(RPEncounterWidgetRef, RPEncounterWidget);
+		UE_LOG(LogTemp, Display, TEXT("Found Character Creator Widget"));
 	}
-	DisplayWidget(RPEncounterWidget);
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Couldn't get Character Creator Widget!"));
+	}
+	return FoundCharacterCreatorWidget;
 }
 
+void UUIManager::DisplayRPEncounterUIWidget()
+{
+	HideAllWidgets();
+	if (!RPEncounterWidgetInstance)
+	{
+		CreateMyWidget(RPEncounterWidgetAssetRef, RPEncounterWidgetInstance);
+	}
+	DisplayWidget(RPEncounterWidgetInstance);
+}
 
 void UUIManager::CreateMyWidget(TSubclassOf<class UUserWidget> WidgetRef, UUserWidget*& Widget)
 {

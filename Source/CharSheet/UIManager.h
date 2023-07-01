@@ -26,32 +26,48 @@ public:
 
 	// Character Creator Widget Blueprint - Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-	TSubclassOf<class UUserWidget> CharacterCreatorWidgetRef;
+	TSubclassOf<class UUserWidget> CharacterCreatorWidgetAssetRef;
 
 	// RP Encounter Widget Blueprint - Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-	TSubclassOf<class UUserWidget> RPEncounterWidgetRef;
+	TSubclassOf<class UUserWidget> RPEncounterWidgetAssetRef;
+
+	// GM Blueprint - Reference GM Blueprint Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<class ANPC> GMBlueprintRef;
+
+	class AGM* GM;
 
 	UFUNCTION()
-	void DisplayCharacterCreatorUI();
+	void DisplayCharacterCreatorUIWidget();
+
 	UFUNCTION()
-	void DisplayRPEncounterUI();
+	UCharacterCreatorWidget* GetCharacterCreatorUIWidget();
+
+	UFUNCTION()
+	void DisplayRPEncounterUIWidget();
+
+
 
 private:
+	void CreateGmNpc();
+	void CreateAllWidgets();
 	void HideAllWidgets();
 	void GetAdventurerReference();
 	void CreateMyWidget(TSubclassOf<UUserWidget> WidgetRef, UUserWidget*& Widget);
 	void DisplayWidget(UUserWidget*& Widget);
 
-
-
 	// Adventurer class
 	class UAdventurer* Adventurer;
 
 	// Variable to hold the Character Creator Widget After Creating it
-	UUserWidget* CharacterCreatorWidget;
+	UUserWidget* CharacterCreatorWidgetInstance;
 
 	// Variable to hold the RP Encounter Widget After Creating it
-	UUserWidget* RPEncounterWidget;
+	UUserWidget* RPEncounterWidgetInstance;
+
+	// Variable to hold the GM After Creating it
+	class ANPC* GMNPC;
+
 
 };

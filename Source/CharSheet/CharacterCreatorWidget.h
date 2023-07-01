@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "CharacterCreatorWidget.generated.h"
 
+
 // We make the class abstract, as we don't want to create
 // instances of this, instead we want to create instances
 // of our UMG Blueprint subclass.
@@ -14,7 +15,6 @@ class CHARSHEET_API UCharacterCreatorWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-
 private:
 	// Ability Score Values
 	int StrScore = 8;
@@ -34,8 +34,6 @@ private:
 	FString PronounHe = "";
 	FString PronounHim = "";
 	FString PronounHis = "";
-
-
 
 
 protected:

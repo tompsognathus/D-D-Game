@@ -2,6 +2,12 @@
 
 
 #include "GM.h"
+#include "UIManager.h"
+#include "CharSheetCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/Blueprint.h"
+#include "CharacterCreatorWidget.h"
+
 
 // Sets default values
 AGM::AGM()
@@ -15,7 +21,9 @@ AGM::AGM()
 void AGM::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	// Get reference to UIManager
+
 }
 
 // Called every frame
@@ -23,6 +31,11 @@ void AGM::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AGM::StartIncitingIncidentDialogue()
+{
+	StartDialogue(Dialogues[0], { this });
 }
 
 

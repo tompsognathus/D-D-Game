@@ -2,6 +2,8 @@
 
 
 #include "NPC.h"
+#include "DlgSystem/DlgManager.h"
+
 
 // Sets default values
 ANPC::ANPC()
@@ -25,3 +27,26 @@ void ANPC::Tick(float DeltaTime)
 
 }
 
+bool ANPC::StartDialogue(UDlgDialogue* Dialogue, const TArray<UObject*>& DlgParticipants)
+{
+    DialogueContext = UDlgManager::StartDialogue(Dialogue, DlgParticipants);
+    return DialogueContext != nullptr;
+}
+
+
+bool ANPC::SelectDialogueOption(int32 Index)
+{
+    if (!DialogueContext || !DialogueContext->IsValidOptionIndex(Index))
+    {
+        return false;
+    }
+
+    if (!DialogueContext->ChooseOption(Index) || DialogueContext->HasDialogueEnded())
+    {
+        // Dialogue Has Ended
+        DialogueContext = nullptr;
+        return false;
+    }
+
+    return true;
+}
