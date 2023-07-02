@@ -13,10 +13,11 @@ void URPEncounterWidget::NativeConstruct()
 	// Bind delegates
 
 	//ensure(OptionBtn1 != nullptr);
-	OptionBtn1->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn1Clicked);
-	OptionBtn2->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn2Clicked);
-	OptionBtn3->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn3Clicked);
-	OptionBtn4->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn4Clicked);
+	//OptionBtn1->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn1Clicked);
+
+	//OptionBtn2->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn2Clicked);
+	//OptionBtn3->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn3Clicked);
+	//OptionBtn4->OnClicked.AddDynamic(this, &URPEncounterWidget::OnOptionBtn4Clicked);
 
 }
 
