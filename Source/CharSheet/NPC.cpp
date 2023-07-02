@@ -41,9 +41,16 @@ void ANPC::PopulateDialogueOptionsText()
     {
         TArray<FText> Options = GetDialogueOptionsText();
 
-        for (int i = 0; i < Options.Num(); i++)
+        for (int i = 0; i < 4; i++)
         {
-            UIManager->SetRPEncounterOptionText(i + 1, Options[i]); // Options are currently indexed from 1
+            if (i < Options.Num())
+            {
+                UIManager->SetRPEncounterOptionText(i + 1, Options[i]); // Options are currently indexed from 1
+            }
+            else
+            {
+				UIManager->SetRPEncounterOptionText(i + 1, FText::FromString(""));
+			}
         }
     } else { UE_LOG(LogTemp, Error, TEXT("UIManager not found")); }
 }

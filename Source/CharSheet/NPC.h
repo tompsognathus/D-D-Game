@@ -25,9 +25,6 @@ protected:
 
 	class UUIManager* UIManager;
 
-	void PopulateDialogueBodyText();
-	void PopulateDialogueOptionsText();
-
 private:
 	UFUNCTION(BlueprintCallable, Category = Dialogue)
 	FText GetDialogueBodyText();
@@ -65,6 +62,9 @@ public:
 	// Functionto advance through the dialogue
 	UFUNCTION(BlueprintCallable, Category = Dialogue)
 	bool SelectDialogueOption(int32 Index);
+
+	void PopulateDialogueBodyText();
+	void PopulateDialogueOptionsText();
 
 	// Character's dialogue assets
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Dialogue)

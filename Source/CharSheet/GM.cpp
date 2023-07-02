@@ -19,9 +19,6 @@ AGM::AGM()
 void AGM::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Get reference to UIManager
-
 }
 
 // Called every frame
@@ -43,6 +40,7 @@ void AGM::StartIncitingIncidentDialogue()
 
 	} else { UE_LOG(LogTemp, Error, TEXT("UIManager not found")); }
 }
+
 
 
 

@@ -27,6 +27,7 @@ public:
 
 	void StartIncitingIncidentDialogue();
 
+
 private:
 	class UCharacterCreatorWidget* CharacterCreatorWidget;
 

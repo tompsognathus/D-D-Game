@@ -29,12 +29,7 @@ void UUIManager::BeginPlay()
 	CreateParentUIWidget();
 	// Get widget switcher from parent ui widget
 	WidgetSwitcher = Cast<UWidgetSwitcher>(ParentUIWidgetInstance->GetWidgetFromName("WidgetSwitcher"));
-	
-	if (WidgetSwitcher)
-	{
-		UE_LOG(LogTemp, Display, TEXT("WidgetSwitcher found"));
-	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
-	//WidgetSwitcher = CreateWidgetSwitcher();
+
 	CreateAllWidgets();
 
 	DisplayCharacterCreatorUIWidget();
@@ -67,18 +62,11 @@ void UUIManager::CreateParentUIWidget()
 	ParentUIWidgetInstance->AddToViewport();
 }
 
-
-UWidgetSwitcher* UUIManager::CreateWidgetSwitcher()
-{
-	UWidgetSwitcher* NewWidgetSwitcher = NewObject<UWidgetSwitcher>(this);
-
-	return NewWidgetSwitcher;
-}
-
 void UUIManager::CreateAllWidgets()
 {
 	CharacterCreatorWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CharacterCreatorWidgetAssetRef);
 	RPEncounterWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), RPEncounterWidgetAssetRef);
+	HUDWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetAssetRef);
 
 	// Add created widgets to widget switcher
 	if (WidgetSwitcher)
@@ -94,6 +82,11 @@ void UUIManager::CreateAllWidgets()
 			WidgetSwitcher->AddChild(RPEncounterWidgetInstance);
 
 		} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidgetInstance not found")); }
+
+		if (HUDWidgetInstance)
+		{
+			WidgetSwitcher->AddChild(HUDWidgetInstance);
+		} else { UE_LOG(LogTemp, Error, TEXT("HUDWidgetInstance not found")); }
 
 	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
 
@@ -165,6 +158,34 @@ void UUIManager::SetRPEncounterOptionText(int OptionNumber, FText NewOptionText)
 			break;
 		}
 	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
+}
+
+void UUIManager::DisplayHUDUIWidget()
+{
+	if (HUDWidgetInstance)
+	{
+		HUDWidgetInstance->AddToViewport();
+	} else { UE_LOG(LogTemp, Error, TEXT("HUDWidgetInstance not found")); }
+}
+
+void UUIManager::SelectDialogueOption(int OptionNumber)
+{
+	if (GM)
+	{
+		bool HasReachedEndOfDialogue = !(GM->SelectDialogueOption(OptionNumber));
+		UE_LOG(LogTemp, Display, TEXT("HasReachedEndOfDialogue: %s"), HasReachedEndOfDialogue ? TEXT("true") : TEXT("false"));
+		if (!HasReachedEndOfDialogue)
+		{
+			GM->PopulateDialogueBodyText();
+			GM->PopulateDialogueOptionsText();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Display, TEXT("Reached end of dialogue"));
+			DisplayHUDUIWidget();
+		}
+
+	} else { UE_LOG(LogTemp, Error, TEXT("GM not found")); }
 }
 
 

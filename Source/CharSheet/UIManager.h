@@ -30,6 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class UUserWidget> ParentUIWidgetAssetRef;
 
+	/***** UI Widgets *****/
 	// Character Creator Widget Blueprint - Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class UUserWidget> CharacterCreatorWidgetAssetRef;
@@ -38,18 +39,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class UUserWidget> RPEncounterWidgetAssetRef;
 
+	// HUD Blueprint - Reference HUD Blueprint Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
+	TSubclassOf<class UUserWidget> HUDWidgetAssetRef;
+
+	/***** NPCs *****/
 	// GM Blueprint - Reference GM Blueprint Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class ANPC> GMBlueprintRef;
 
 	class AGM* GM;
 
+	/***** Character Creator UI Widget *****/
 	UFUNCTION()
 	void DisplayCharacterCreatorUIWidget();
 
 	UFUNCTION()
 	UCharacterCreatorWidget* GetCharacterCreatorUIWidget();
 
+
+	/***** RP Encounter UI Widget *****/
 	UFUNCTION()
 	void DisplayRPEncounterUIWidget();
 
@@ -59,6 +68,13 @@ public:
 	UFUNCTION()
 	void SetRPEncounterOptionText(int OptionNumber, FText NewOptionText);
 
+	/***** HUD UI Widget *****/
+	UFUNCTION()
+	void DisplayHUDUIWidget();
+
+
+	UFUNCTION()
+	void SelectDialogueOption(int OptionNumber);
 
 private:
 	void CreateGmNpc();
@@ -75,6 +91,9 @@ private:
 
 	// Variable to hold the RP Encounter Widget After Creating it
 	class UUserWidget* RPEncounterWidgetInstance;
+
+	// Variable to hold the HUD Widget After Creating it
+	class UUserWidget* HUDWidgetInstance;
 
 	// Variable to hold the GM After Creating it
 	class ANPC* GMNPC;

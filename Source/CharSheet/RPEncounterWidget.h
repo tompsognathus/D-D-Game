@@ -67,5 +67,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Text Fields")
 	void SetOptionText(int OptionNumber, FText NewOptionText);
 
-
+private:
+	class UUIManager* UIManager;
 };
