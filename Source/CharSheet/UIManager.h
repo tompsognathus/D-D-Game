@@ -87,7 +87,7 @@ private:
 	class UWidgetSwitcher* WidgetSwitcher;
 
 	// Variable to hold the Character Creator Widget After Creating it
-	class  UUserWidget* CharacterCreatorWidgetInstance;
+	class UUserWidget* CharacterCreatorWidgetInstance;
 
 	// Variable to hold the RP Encounter Widget After Creating it
 	class UUserWidget* RPEncounterWidgetInstance;
