@@ -4,7 +4,6 @@
 #include "GM.h"
 #include "UIManager.h"
 #include "CharSheetCharacter.h"
-#include "Kismet/GameplayStatics.h"
 #include "Engine/Blueprint.h"
 #include "CharacterCreatorWidget.h"
 
@@ -14,7 +13,6 @@ AGM::AGM()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -36,6 +34,19 @@ void AGM::Tick(float DeltaTime)
 void AGM::StartIncitingIncidentDialogue()
 {
 	StartDialogue(Dialogues[0], { this });
+	
+	if (UIManager)
+	{
+		UIManager->DisplayRPEncounterUIWidget();
+		
+		UIManager->SetRPEncounterBodyText(GetDialogueBodyText());
+		TArray<FText> Options = GetDialogueOptionsText();
+
+		for (int i = 0; i < Options.Num(); i++)
+		{
+			UIManager->SetRPEncounterOptionText(i+1, Options[i]); // Options are currently indexed from 1
+		}
+	} else { UE_LOG(LogTemp, Error, TEXT("UIManager not found")); }
 }
 
 

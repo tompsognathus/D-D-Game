@@ -23,6 +23,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	class UUIManager* UIManager;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -50,6 +52,12 @@ public:
 	// Function to start the dialogue
 	UFUNCTION(BlueprintCallable, Category = Dialogue)
 	bool StartDialogue(UDlgDialogue* Dialogue, const TArray<UObject*>& Participants);
+
+	UFUNCTION(BlueprintCallable, Category = Dialogue)
+	FText GetDialogueBodyText();
+
+	UFUNCTION(BlueprintCallable, Category = Dialogue)
+	TArray<FText> GetDialogueOptionsText();
 
 	// Functionto advance through the dialogue
 	UFUNCTION(BlueprintCallable, Category = Dialogue)

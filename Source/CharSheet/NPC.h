@@ -23,6 +23,18 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	class UUIManager* UIManager;
+
+	void PopulateDialogueBodyText();
+	void PopulateDialogueOptionsText();
+
+private:
+	UFUNCTION(BlueprintCallable, Category = Dialogue)
+	FText GetDialogueBodyText();
+
+	UFUNCTION(BlueprintCallable, Category = Dialogue)
+	TArray<FText> GetDialogueOptionsText();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -38,7 +50,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Dialogue)
 	FText DialogueParticipantDisplayName = NSLOCTEXT("ExampleNamespace", "ExampleCharacterName", "ExampleParticipantName");
 
-
 	// Used for GetParticipantIcon
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Dialogue)
 	UTexture2D* DialogueParticipantIcon;
@@ -50,12 +61,6 @@ public:
 	// Function to start the dialogue
 	UFUNCTION(BlueprintCallable, Category = Dialogue)
 	bool StartDialogue(UDlgDialogue* Dialogue, const TArray<UObject*>& Participants);
-
-	UFUNCTION(BlueprintCallable, Category = Dialogue)
-	FText GetDialogueBodyText();
-
-	UFUNCTION(BlueprintCallable, Category = Dialogue)
-	TArray<FText> GetDialogueOptionsText();
 
 	// Functionto advance through the dialogue
 	UFUNCTION(BlueprintCallable, Category = Dialogue)
