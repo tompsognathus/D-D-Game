@@ -64,6 +64,8 @@ private:
 	void CreateGmNpc();
 	void CreateAllWidgets();
 
+	class UWidgetSwitcher* CreateWidgetSwitcher();
+
 	// Variable to hold the Parent UI Widget After Creating it
 	class UUserWidget* ParentUIWidgetInstance;
 

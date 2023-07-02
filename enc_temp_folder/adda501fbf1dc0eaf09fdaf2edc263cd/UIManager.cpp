@@ -29,7 +29,12 @@ void UUIManager::BeginPlay()
 	CreateParentUIWidget();
 	// Get widget switcher from parent ui widget
 	WidgetSwitcher = Cast<UWidgetSwitcher>(ParentUIWidgetInstance->GetWidgetFromName("WidgetSwitcher"));
-
+	
+	if (WidgetSwitcher)
+	{
+		UE_LOG(LogTemp, Display, TEXT("WidgetSwitcher found"));
+	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
+	//WidgetSwitcher = CreateWidgetSwitcher();
 	CreateAllWidgets();
 
 	DisplayCharacterCreatorUIWidget();
@@ -60,6 +65,14 @@ void UUIManager::CreateParentUIWidget()
 {
 	ParentUIWidgetInstance = CreateWidget(GetWorld(), ParentUIWidgetAssetRef);
 	ParentUIWidgetInstance->AddToViewport();
+}
+
+
+UWidgetSwitcher* UUIManager::CreateWidgetSwitcher()
+{
+	UWidgetSwitcher* NewWidgetSwitcher = NewObject<UWidgetSwitcher>(this);
+
+	return NewWidgetSwitcher;
 }
 
 void UUIManager::CreateAllWidgets()

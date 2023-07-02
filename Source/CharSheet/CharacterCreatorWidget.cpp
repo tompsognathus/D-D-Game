@@ -172,6 +172,7 @@ int UCharacterCreatorWidget::CalculatePointValue(int AbilityScore)
 // React to UI Interactions
 void UCharacterCreatorWidget::OnSubmitBtnClicked()
 {
+	UE_LOG(LogTemp, Display, TEXT("Submit button clicked"));
 	// Get reference to Adventurer component from player character
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	APawn* PlayerPawn = PlayerController->GetPawn();
@@ -194,7 +195,7 @@ void UCharacterCreatorWidget::OnSubmitBtnClicked()
 	}
 	else { UE_LOG(LogTemp, Error, TEXT("Adventurer component not found")); }
 
-
+	// Switch to the next widget (RP Encounter) and start the first dialogue
 	UUIManager* UIManager = PlayerPawn->FindComponentByClass<UUIManager>();
 	if (UIManager)
 	{
