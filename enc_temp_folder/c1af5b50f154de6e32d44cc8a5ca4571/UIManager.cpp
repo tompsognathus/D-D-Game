@@ -5,7 +5,6 @@
 #include "Adventurer.h"
 #include "CharacterCreatorWidget.h"
 #include "GM.h"
-#include "RPEncounterWidget.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -105,43 +104,6 @@ void UUIManager::DisplayRPEncounterUIWidget()
 		CreateMyWidget(RPEncounterWidgetAssetRef, RPEncounterWidgetInstance);
 	}
 	DisplayWidget(RPEncounterWidgetInstance);
-}
-
-void UUIManager::SetRPEncounterBodyText(FText BodyText)
-{
-	URPEncounterWidget* RPEncounterWidget = Cast<URPEncounterWidget>(RPEncounterWidgetInstance);
-
-	if (RPEncounterWidget)
-	{
-		RPEncounterWidget->SetBodyText(BodyText);
-	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
-}
-
-void UUIManager::SetRPEncounterOptionText(int OptionNumber, FText NewOptionText)
-{
-	URPEncounterWidget* RPEncounterWidget = Cast<URPEncounterWidget>(RPEncounterWidgetInstance);
-
-	if (RPEncounterWidget)
-	{
-		switch (OptionNumber)
-		{
-		case 1:
-			RPEncounterWidget->SetOptionText(1, NewOptionText);
-			break;
-		case 2:
-			RPEncounterWidget->SetOptionText(2, NewOptionText);
-			break;
-		case 3:
-			RPEncounterWidget->SetOptionText(3, NewOptionText);
-			break;
-		case 4:
-			RPEncounterWidget->SetOptionText(4, NewOptionText);
-			break;
-		default:
-			UE_LOG(LogTemp, Error, TEXT("Invalid option number"));
-			break;
-		}
-	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
 }
 
 void UUIManager::CreateMyWidget(TSubclassOf<class UUserWidget> WidgetRef, UUserWidget*& Widget)

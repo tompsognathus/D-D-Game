@@ -47,11 +47,7 @@ public:
 	UFUNCTION()
 	void DisplayRPEncounterUIWidget();
 
-	UFUNCTION()
-	void SetRPEncounterBodyText(FText BodyText);
 
-	UFUNCTION()
-	void SetRPEncounterOptionText(int OptionNumber, FText NewOptionText);
 
 private:
 	void CreateGmNpc();

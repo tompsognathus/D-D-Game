@@ -34,11 +34,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* OptionText4;
 
-public:
 	UFUNCTION(BlueprintCallable, Category = "Text Fields")
-	void SetBodyText(FText NewAdventureText);
+	void SetAdventureText(FText NewAdventureText);
 
 	UFUNCTION(BlueprintCallable, Category = "Text Fields")
 	void SetOptionText(int OptionNumber, FText NewOptionText);
-
 };

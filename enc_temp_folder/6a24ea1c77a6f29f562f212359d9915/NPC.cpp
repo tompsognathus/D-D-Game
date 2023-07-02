@@ -33,36 +33,6 @@ bool ANPC::StartDialogue(UDlgDialogue* Dialogue, const TArray<UObject*>& DlgPart
     return DialogueContext != nullptr;
 }
 
-FText ANPC::GetDialogueBodyText()
-{
-    if (!DialogueContext)
-    {
-        UE_LOG(LogTemp, Error, TEXT("DialogueContext is null"));
-	}
-
-    const FText Text = DialogueContext->GetActiveNodeText();
-
-    return Text;
-}
-
-TArray<FText> ANPC::GetDialogueOptionsText()
-{
-    if (!DialogueContext)
-    {
-		UE_LOG(LogTemp, Error, TEXT("DialogueContext is null"));
-	}
-
-	TArray<FText> Options;
-    int OptionsNum = DialogueContext->GetOptionsNum();
-
-    for (int i = 0; i < OptionsNum; i++)
-    {
-		Options.Add(DialogueContext->GetOptionText(i));
-	}
-
-	return Options;
-}
-
 
 bool ANPC::SelectDialogueOption(int32 Index)
 {

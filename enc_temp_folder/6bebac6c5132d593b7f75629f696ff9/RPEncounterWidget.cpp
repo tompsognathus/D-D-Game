@@ -11,7 +11,7 @@ void URPEncounterWidget::NativeConstruct()
 
 }
 
-void URPEncounterWidget::SetBodyText(FText NewAdventureText)
+void URPEncounterWidget::SetAdventureText(FText NewAdventureText)
 {
 	if (AdventureText)
 	{
