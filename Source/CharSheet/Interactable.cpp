@@ -3,6 +3,7 @@
 
 #include "Interactable.h"
 
+
 // Sets default values for this component's properties
 UInteractable::UInteractable()
 {
@@ -11,7 +12,7 @@ UInteractable::UInteractable()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// Bind to parent actor's OnClick
-	//GetOwner()->OnClicked.AddDynamic(this, &UInteractable::OnClicked);
+
 }
 
 
@@ -20,7 +21,16 @@ void UInteractable::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	AActor* Owner = GetOwner();
+	if (Owner)
+	{
+		// Subscribe to the actor's event
+		Owner->OnClicked.AddDynamic(this, &UInteractable::OnActorClicked);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!"));
+	}
 	
 }
 
@@ -33,7 +43,20 @@ void UInteractable::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-//void UInteractable::OnClicked(AActor* ClickedActor, FKey ButtonClicked)
-//{
-//	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
-//}
+void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
+{
+	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
+
+	// Set custom depth on root component to show toon outlines
+	AActor* Owner = GetOwner();
+	if (Owner)
+	{
+		// Get static mesh component
+		UStaticMeshComponent* StaticMeshComponent = Owner->FindComponentByClass<UStaticMeshComponent>();
+		if (StaticMeshComponent)
+		{
+			StaticMeshComponent->SetRenderCustomDepth(true);
+		}
+		else { UE_LOG(LogTemp, Warning, TEXT("Static mesh component not found!")); }
+	} else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
+}

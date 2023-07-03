@@ -11,7 +11,7 @@ UInteractable::UInteractable()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// Bind to parent actor's OnClick
-	//GetOwner()->OnClicked.AddDynamic(this, &UInteractable::OnClicked);
+
 }
 
 
@@ -20,7 +20,16 @@ void UInteractable::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	AActor* Owner = GetOwner();
+	if (Owner)
+	{
+		// Subscribe to the actor's event
+		Owner->OnClicked.AddDynamic(this, &UInteractable::OnActorClicked);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!"));
+	}
 	
 }
 
@@ -33,7 +42,7 @@ void UInteractable::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-void UInteractable::OnClicked(AActor* ClickedActor, FKey ButtonClicked)
+void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
 {
 	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
 }
