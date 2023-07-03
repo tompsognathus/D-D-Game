@@ -33,7 +33,7 @@ void UInteractable::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-//void UInteractable::OnClicked(AActor* ClickedActor, FKey ButtonClicked)
-//{
-//	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
-//}
+void UInteractable::OnClicked(AActor* ClickedActor, FKey ButtonClicked)
+{
+	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
+}

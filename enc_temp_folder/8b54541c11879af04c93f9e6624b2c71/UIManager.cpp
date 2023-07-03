@@ -49,6 +49,11 @@ void UUIManager::CreateGmNpc()
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = GetOwner();
 	GM = GetWorld()->SpawnActor<AGM>(GMBlueprintRef, SpawnParams);
+	if (GM)
+	{
+		GM = Cast<AGM>(UGameplayStatics::GetActorOfClass(GetWorld(), AGM::StaticClass()));
+
+	} else { UE_LOG(LogTemp, Error, TEXT("GM not spawned")); }
 }
 
 void UUIManager::CreateParentUIWidget()

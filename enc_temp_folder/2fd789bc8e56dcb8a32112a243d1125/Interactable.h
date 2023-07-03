@@ -24,7 +24,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-//private:
-//	UFUNCTION()
-	//void OnClicked(AActor* ClickedActor, FKey ButtonClicked);
+private:
+	UFUNCTION()
+	void OnClicked(AActor* ClickedActor, FKey ButtonClicked);
 };
