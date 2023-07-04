@@ -74,7 +74,9 @@ public:
 	void SelectDialogueOption(int OptionNumber);
 
 private:
-	void CreateAllWidgets();
+	void SetUpUIWidgets();
+	void AddWidgetsToWidgetSwitcher();
+	void CreateUIWidgets();
 	void AddWidgetToWidgetSwitcher(UUserWidget* WidgetInstanceToAdd);
 	void BindToWidgets();
 
