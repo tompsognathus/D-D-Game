@@ -45,7 +45,9 @@ ACharSheetCharacter::ACharSheetCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
+	
 }
+
 
 
 void ACharSheetCharacter::Tick(float DeltaSeconds)

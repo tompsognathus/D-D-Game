@@ -48,8 +48,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class ANPC> GMBlueprintRef;
 
-	// Reference to the GM
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	class AGM* GM;
 
 	/***** Character Creator UI Widget *****/
@@ -96,5 +94,9 @@ private:
 
 	// Variable to hold the HUD Widget After Creating it
 	class UUserWidget* HUDWidgetInstance;
+
+	// Variable to hold the GM After Creating it
+	class ANPC* GMNPC;
+
 
 };

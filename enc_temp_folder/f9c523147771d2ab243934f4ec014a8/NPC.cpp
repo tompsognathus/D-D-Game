@@ -12,20 +12,19 @@ ANPC::ANPC()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-}
-
-// Called when the game starts or when spawned
-void ANPC::BeginPlay()
-{
-	Super::BeginPlay();
 
     // Get UI Manager reference through posessed pawn
     ACharSheetCharacter* PlayerCharacter = Cast<ACharSheetCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
     if (PlayerCharacter)
     {
         UIManager = PlayerCharacter->FindComponentByClass<UUIManager>();
-    }
-    else { UE_LOG(LogTemp, Error, TEXT("PlayerCharacter not found")); }
+    } else { UE_LOG(LogTemp, Error, TEXT("PlayerCharacter not found")); }
+}
+
+// Called when the game starts or when spawned
+void ANPC::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void ANPC::PopulateDialogueBodyText()

@@ -10,7 +10,7 @@ void UHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	CharSheetBtn->OnClicked.AddDynamic(this, &UHUDWidget::OnCharSheetBtnClicked);
+	//CharSheetBtn->OnClicked.AddDynamic(this, &UHUDWidget::OnCharSheetBtnClicked);
 }
 
 void UHUDWidget::DisplayGpText(FText NewGpText)

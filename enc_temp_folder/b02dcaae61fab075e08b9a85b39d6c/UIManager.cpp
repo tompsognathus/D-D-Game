@@ -26,7 +26,6 @@ void UUIManager::BeginPlay()
 	Super::BeginPlay();
 
 	CreateGmNpc();
-
 	CreateParentUIWidget();
 	// Get widget switcher from parent ui widget
 	WidgetSwitcher = Cast<UWidgetSwitcher>(ParentUIWidgetInstance->GetWidgetFromName("WidgetSwitcher"));
@@ -49,7 +48,7 @@ void UUIManager::CreateGmNpc()
 {
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = GetOwner();
-	//GM = GetWorld()->SpawnActor<AGM>(GMBlueprintRef, SpawnParams);
+	GM = GetWorld()->SpawnActor<AGM>(GMBlueprintRef, SpawnParams);
 }
 
 void UUIManager::CreateParentUIWidget()
