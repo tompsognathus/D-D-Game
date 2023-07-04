@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCharSheetBtnClickedSignature);
+
 UCLASS()
 class CHARSHEET_API UHUDWidget : public UUserWidget
 {
@@ -41,7 +44,11 @@ private:
 	UFUNCTION()
 	void DisplayXp(float NewXpPercent);
 
-	void OnCharSheetBtnClicked();
+	UFUNCTION()
+	void HandleCharSheetBtnClick();
 
+public:
+	UPROPERTY(BlueprintAssignable, Category = "Button")
+	FCharSheetBtnClickedSignature OnCharSheetBtnClickedDelegate;
 
 };

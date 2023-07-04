@@ -43,6 +43,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class UUserWidget> HUDWidgetAssetRef;
 
+	// HUD Blueprint - Reference HUD Blueprint Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
+	TSubclassOf<class UUserWidget> CharSheetWidgetAssetRef;
+
 	/***** NPCs *****/
 	// GM Blueprint - Reference GM Blueprint Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
@@ -52,35 +56,32 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	class AGM* GM;
 
-	/***** Character Creator UI Widget *****/
 	UFUNCTION()
-	void DisplayCharacterCreatorUIWidget();
+	void DisplayWidget(class UUserWidget* WidgetInstanceToDisplay);
 
+	UFUNCTION()
+		void DisplayRPEncounterUIWidget();
+
+	/***** Character Creator UI Widget *****/
 	UFUNCTION()
 	UCharacterCreatorWidget* GetCharacterCreatorUIWidget();
 
-
 	/***** RP Encounter UI Widget *****/
-	UFUNCTION()
-	void DisplayRPEncounterUIWidget();
-
 	UFUNCTION()
 	void SetRPEncounterBodyText(FText BodyText);
 
 	UFUNCTION()
 	void SetRPEncounterOptionText(int OptionNumber, FText NewOptionText);
 
-	/***** HUD UI Widget *****/
-	UFUNCTION()
-	void DisplayHUDUIWidget();
-
-
 	UFUNCTION()
 	void SelectDialogueOption(int OptionNumber);
 
 private:
-	void CreateGmNpc();
 	void CreateAllWidgets();
+	void BindToWidgets();
+
+	UFUNCTION()
+	void HandleCharSheetBtnClicked();
 
 	// Variable to hold the Parent UI Widget After Creating it
 	class UUserWidget* ParentUIWidgetInstance;
@@ -96,5 +97,11 @@ private:
 
 	// Variable to hold the HUD Widget After Creating it
 	class UUserWidget* HUDWidgetInstance;
+
+	// Variable to hold the Char Sheet Widget After Creating it
+	class UUserWidget* CharSheetWidgetInstance;
+
+	// Remember what the previous UI widget was
+	class UUserWidget* PreviousWidget = CharacterCreatorWidgetInstance;
 
 };

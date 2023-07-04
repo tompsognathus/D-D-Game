@@ -2,12 +2,16 @@
 
 
 #include "UIManager.h"
-#include "Adventurer.h"
-#include "CharacterCreatorWidget.h"
-#include "GM.h"
-#include "RPEncounterWidget.h"
 #include "Kismet/GameplayStatics.h"
+
+#include "Adventurer.h"
+#include "GM.h"
+
 #include "Components/WidgetSwitcher.h"
+#include "CharacterCreatorWidget.h"
+#include "HUDWidget.h"
+#include "RPEncounterWidget.h"
+#include "CharSheetWidget.h"
 
 
 
@@ -25,15 +29,14 @@ void UUIManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CreateGmNpc();
-
 	CreateParentUIWidget();
 	// Get widget switcher from parent ui widget
 	WidgetSwitcher = Cast<UWidgetSwitcher>(ParentUIWidgetInstance->GetWidgetFromName("WidgetSwitcher"));
 
 	CreateAllWidgets();
+	BindToWidgets();
 
-	DisplayCharacterCreatorUIWidget();
+	DisplayWidget(CharacterCreatorWidgetInstance);
 }
 
 
@@ -42,14 +45,6 @@ void UUIManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-}
-
-// Spawn GM from blueprint reference
-void UUIManager::CreateGmNpc()
-{
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = GetOwner();
-	//GM = GetWorld()->SpawnActor<AGM>(GMBlueprintRef, SpawnParams);
 }
 
 void UUIManager::CreateParentUIWidget()
@@ -63,6 +58,7 @@ void UUIManager::CreateAllWidgets()
 	CharacterCreatorWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CharacterCreatorWidgetAssetRef);
 	RPEncounterWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), RPEncounterWidgetAssetRef);
 	HUDWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetAssetRef);
+	CharSheetWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CharSheetWidgetAssetRef);
 
 	// Add created widgets to widget switcher
 	if (WidgetSwitcher)
@@ -84,16 +80,98 @@ void UUIManager::CreateAllWidgets()
 			WidgetSwitcher->AddChild(HUDWidgetInstance);
 		} else { UE_LOG(LogTemp, Error, TEXT("HUDWidgetInstance not found")); }
 
+		if (CharSheetWidgetInstance)
+		{
+			WidgetSwitcher->AddChild(CharSheetWidgetInstance);
+		} else { UE_LOG(LogTemp, Error, TEXT("CharSheetWidgetInstance not found")); }
+
 	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
 
 }
 
-void UUIManager::DisplayCharacterCreatorUIWidget()
+void UUIManager::BindToWidgets()
 {
+	// Char Sheet Button(s) across different HUD widgets
+	if (HUDWidgetInstance)
+	{
+		// Cast to HUDWidget and bind to OnCharSheetBtnClickedDelegate
+		UHUDWidget* HUDWidget = Cast<UHUDWidget>(HUDWidgetInstance);
+		if (HUDWidget)
+		{
+			HUDWidget->OnCharSheetBtnClickedDelegate.AddDynamic(this, &UUIManager::HandleCharSheetBtnClicked);
+		} else { UE_LOG(LogTemp, Error, TEXT("HUDWidget not found")); }
+	} else { UE_LOG(LogTemp, Error, TEXT("HUDWidgetInstance not found")); }
+
+
+	if (RPEncounterWidgetInstance)
+	{
+		// Get UHUDWidget component from RP encounter widget and bind to OnCharSheetBtnClickedDelegate
+		URPEncounterWidget* RPEncounterWidget = Cast<URPEncounterWidget>(RPEncounterWidgetInstance);
+		if (RPEncounterWidget)
+		{
+			UHUDWidget* HUDWidget = RPEncounterWidget->GetHUDWidget();
+
+			if (HUDWidget)
+			{
+				HUDWidget->OnCharSheetBtnClickedDelegate.AddDynamic(this, &UUIManager::HandleCharSheetBtnClicked);
+
+				UE_LOG(LogTemp, Display, TEXT("Bound to RPEncounterWidget"));
+
+			} else { UE_LOG(LogTemp, Error, TEXT("HUDWidget not found")); }
+		} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
+	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidgetInstance not found")); }
+
+
+	if (CharSheetWidgetInstance)
+	{
+		// Get UHUDWidget component from char sheet widget and bind to OnCharSheetBtnClickedDelegate
+		UCharSheetWidget* CharSheetWidget = Cast<UCharSheetWidget>(CharSheetWidgetInstance);
+		if (CharSheetWidget)
+		{
+			UHUDWidget* HUDWidget = CharSheetWidget->GetHUDWidget();
+
+			if (HUDWidget)
+			{
+				HUDWidget->OnCharSheetBtnClickedDelegate.AddDynamic(this, &UUIManager::HandleCharSheetBtnClicked);
+
+			} else { UE_LOG(LogTemp, Error, TEXT("HUDWidget not found")); }
+		} else { UE_LOG(LogTemp, Error, TEXT("CharSheetWidget not found")); }
+	} else { UE_LOG(LogTemp, Error, TEXT("CharSheetWidgetInstance not found")); }
+}
+
+void UUIManager::HandleCharSheetBtnClicked()
+{
+	// If we're in anything other than the char sheet widget, display it
 	if (WidgetSwitcher)
 	{
-		WidgetSwitcher->SetActiveWidget(CharacterCreatorWidgetInstance);
-	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
+		UUserWidget* ActiveWidget = Cast<UUserWidget>(WidgetSwitcher->GetActiveWidget());
+
+		if (ActiveWidget != CharSheetWidgetInstance)
+		{
+			DisplayWidget(CharSheetWidgetInstance);
+		}
+		else
+		{
+			// If we're in the char sheet widget, display the previous widget
+			DisplayWidget(PreviousWidget);
+		}
+	}
+}
+
+void UUIManager::DisplayWidget(UUserWidget* WidgetInstanceToDisplay)
+{
+	PreviousWidget = Cast<UUserWidget>(WidgetSwitcher->GetActiveWidget());
+
+	if (WidgetSwitcher)
+	{
+		WidgetSwitcher->SetActiveWidget(WidgetInstanceToDisplay);
+	}
+	else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
+}
+
+void UUIManager::DisplayRPEncounterUIWidget()
+{
+	DisplayWidget(RPEncounterWidgetInstance);
 }
 
 UCharacterCreatorWidget* UUIManager::GetCharacterCreatorUIWidget()
@@ -111,13 +189,6 @@ UCharacterCreatorWidget* UUIManager::GetCharacterCreatorUIWidget()
 	return FoundCharacterCreatorWidget;
 }
 
-void UUIManager::DisplayRPEncounterUIWidget()
-{
-	if (WidgetSwitcher)
-	{
-		WidgetSwitcher->SetActiveWidget(RPEncounterWidgetInstance);
-	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
-}
 
 void UUIManager::SetRPEncounterBodyText(FText BodyText)
 {
@@ -156,14 +227,6 @@ void UUIManager::SetRPEncounterOptionText(int OptionNumber, FText NewOptionText)
 	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
 }
 
-void UUIManager::DisplayHUDUIWidget()
-{
-	if (WidgetSwitcher)
-	{
-		WidgetSwitcher->SetActiveWidget(HUDWidgetInstance);
-	} else { UE_LOG(LogTemp, Error, TEXT("HUDWidgetInstance not found")); }
-}
-
 void UUIManager::SelectDialogueOption(int OptionNumber)
 {
 	if (GM)
@@ -178,7 +241,7 @@ void UUIManager::SelectDialogueOption(int OptionNumber)
 		else
 		{
 			UE_LOG(LogTemp, Display, TEXT("Reached end of dialogue"));
-			DisplayHUDUIWidget();
+			DisplayWidget(HUDWidgetInstance);
 		}
 
 	} else { UE_LOG(LogTemp, Error, TEXT("GM not found")); }

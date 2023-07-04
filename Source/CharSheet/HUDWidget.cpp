@@ -10,7 +10,7 @@ void UHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//CharSheetBtn->OnClicked.AddDynamic(this, &UHUDWidget::OnCharSheetBtnClicked);
+	CharSheetBtn->OnClicked.AddDynamic(this, &UHUDWidget::HandleCharSheetBtnClick);
 }
 
 void UHUDWidget::DisplayGpText(FText NewGpText)
@@ -28,7 +28,8 @@ void UHUDWidget::DisplayXp(float NewXpPercent)
 	XpBar->SetPercent(NewXpPercent);
 }
 
-void UHUDWidget::OnCharSheetBtnClicked()
+void UHUDWidget::HandleCharSheetBtnClick()
 {
-	UE_LOG(LogTemp, Warning, TEXT("CharSheetBtnClicked"));
+	UE_LOG(LogTemp, Display, TEXT("CharSheetBtn clicked"))
+	OnCharSheetBtnClickedDelegate.Broadcast();
 }

@@ -211,7 +211,6 @@ void UCharacterCreatorWidget::OnSubmitBtnClicked()
 }
 
 
-
 void UCharacterCreatorWidget::OnRaceSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectType)
 {
 	UE_LOG(LogTemp, Display, TEXT("Race selection changed"));
@@ -279,7 +278,6 @@ void UCharacterCreatorWidget::UpdateAbilityBtnVisibility()
 	UpdateSingleAbilityBtnVisibility(WisScore, WisBtnUp, WisBtnDown);
 	UpdateSingleAbilityBtnVisibility(ChaScore, ChaBtnUp, ChaBtnDown);
 }
-
 
 void UCharacterCreatorWidget::UpdateSingleAbilityBtnVisibility(int& AbilityScore, UButton* UpBtn, UButton* DownBtn)
 {

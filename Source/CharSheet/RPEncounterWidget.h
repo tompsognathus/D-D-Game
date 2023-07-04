@@ -4,7 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+
+#include "HUDWidget.h"
+
+
 #include "RPEncounterWidget.generated.h"
+
 
 // We make the class abstract, as we don't want to create
 // instances of this, instead we want to create instances
@@ -18,6 +23,10 @@ protected:
 	// Doing setup in the C++ constructor is not as
 	// useful as using NativeConstruct.
 	virtual void NativeConstruct() override;
+
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UHUDWidget* HUDWidget;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* AdventureText;
@@ -66,6 +75,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Text Fields")
 	void SetOptionText(int OptionNumber, FText NewOptionText);
+
+	UFUNCTION()
+	UHUDWidget* GetHUDWidget();
 
 private:
 	class UUIManager* UIManager;

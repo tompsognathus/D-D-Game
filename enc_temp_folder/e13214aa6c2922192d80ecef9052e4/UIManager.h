@@ -43,11 +43,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class UUserWidget> HUDWidgetAssetRef;
 
+	// HUD Blueprint - Reference HUD Blueprint Asset in the Editor
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
+	TSubclassOf<class UUserWidget> CharSheetWidgetAssetRef;
+
 	/***** NPCs *****/
 	// GM Blueprint - Reference GM Blueprint Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class ANPC> GMBlueprintRef;
 
+	// Reference to the GM
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	class AGM* GM;
 
 	/***** Character Creator UI Widget *****/
@@ -72,13 +78,20 @@ public:
 	UFUNCTION()
 	void DisplayHUDUIWidget();
 
+	/***** Char Sheet UI Widget *****/
+	UFUNCTION()
+	void DisplayCharSheetUIWidget();
+
 
 	UFUNCTION()
 	void SelectDialogueOption(int OptionNumber);
 
 private:
-	void CreateGmNpc();
 	void CreateAllWidgets();
+	void BindToWidgets();
+
+	UFUNCTION()
+	void HandleCharSheetBtnClicked();
 
 	// Variable to hold the Parent UI Widget After Creating it
 	class UUserWidget* ParentUIWidgetInstance;
@@ -95,8 +108,10 @@ private:
 	// Variable to hold the HUD Widget After Creating it
 	class UUserWidget* HUDWidgetInstance;
 
-	// Variable to hold the GM After Creating it
-	class ANPC* GMNPC;
+	// Variable to hold the Char Sheet Widget After Creating it
+	class UUserWidget* CharSheetWidgetInstance;
 
+	// Remember what the previous UI widget was
+	int PreviousUIWidgetIndex = 0;
 
 };

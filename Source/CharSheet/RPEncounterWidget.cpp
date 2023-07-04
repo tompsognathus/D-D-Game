@@ -69,6 +69,13 @@ void URPEncounterWidget::SetOptionText(int OptionNumber, FText NewOptionText)
 	}
 }
 
+
+UHUDWidget* URPEncounterWidget::GetHUDWidget()
+{
+	return HUDWidget;
+}
+
+
 void URPEncounterWidget::OnOptionBtn1Clicked()
 {
 	if (UIManager)
