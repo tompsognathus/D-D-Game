@@ -20,7 +20,7 @@ void UHUDWidget::DisplayGpText(FText NewGpText)
 
 void UHUDWidget::DisplayHp(float NewHpPercent)
 {
-	HealthBar->SetPercent(NewHpPercent);
+	HpBar->SetPercent(NewHpPercent);
 }
 
 void UHUDWidget::DisplayXp(float NewXpPercent)

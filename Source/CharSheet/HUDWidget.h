@@ -23,7 +23,7 @@ protected:
 	class UButton* CharSheetBtn;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UProgressBar* HealthBar;
+	class UProgressBar* HpBar;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UProgressBar* XpBar;
