@@ -23,9 +23,6 @@ protected:
 	void CreateParentUIWidget();
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	// Parent Widget Blueprint - Reference UMG Asset in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Widgets")
 	TSubclassOf<class UUserWidget> ParentUIWidgetAssetRef;
@@ -78,6 +75,7 @@ public:
 
 private:
 	void CreateAllWidgets();
+	void AddWidgetToWidgetSwitcher(UUserWidget* WidgetInstanceToAdd);
 	void BindToWidgets();
 
 	UFUNCTION()

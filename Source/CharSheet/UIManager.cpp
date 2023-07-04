@@ -29,66 +29,90 @@ void UUIManager::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// First create a parent widget that only contains a widget switcher and is used to hold 
+	// all other widgets and add it to viewport
 	CreateParentUIWidget();
-	// Get widget switcher from parent ui widget
+
+	// Get a reference to the widget switcher we just created inside the parent
 	WidgetSwitcher = Cast<UWidgetSwitcher>(ParentUIWidgetInstance->GetWidgetFromName("WidgetSwitcher"));
 
-	CreateAllWidgets();
+	// Create all widgets and add them to the widget switcher
+	SetUpUIWidgets();
+
+	// Bind to events in widgets - things like button presses
 	BindToWidgets();
 
+	// Display the character creator widget
 	DisplayWidget(CharacterCreatorWidgetInstance);
 }
 
-
-// Called every frame
-void UUIManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-}
-
+/*
+ * Create a parent widget that only contains a widget switcher and is used to hold all other widgets 
+ * and add it to viewport
+ */
 void UUIManager::CreateParentUIWidget()
 {
 	ParentUIWidgetInstance = CreateWidget(GetWorld(), ParentUIWidgetAssetRef);
 	ParentUIWidgetInstance->AddToViewport();
 }
 
-void UUIManager::CreateAllWidgets()
+/*
+ * Create all UI widgets and add them to the widget switcher
+ */
+void UUIManager::SetUpUIWidgets()
+{
+	CreateUIWidgets();
+	AddWidgetsToWidgetSwitcher();
+}
+
+/*
+ * Create all the different UI widgets. Make sure to always also update the AddWidgetsToWidgetSwitcher 
+ * function when you add a widget here!!!
+ */
+void UUIManager::CreateUIWidgets()
 {
 	CharacterCreatorWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CharacterCreatorWidgetAssetRef);
 	RPEncounterWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), RPEncounterWidgetAssetRef);
 	HUDWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetAssetRef);
 	CharSheetWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CharSheetWidgetAssetRef);
-
-	// Add created widgets to widget switcher
-	if (WidgetSwitcher)
-	{
-		if (CharacterCreatorWidgetInstance)
-		{
-			WidgetSwitcher->AddChild(CharacterCreatorWidgetInstance);
-
-		} else { UE_LOG(LogTemp, Error, TEXT("CharacterCreatorWidgetInstance not found")); }
-
-		if (RPEncounterWidgetInstance)
-		{
-			WidgetSwitcher->AddChild(RPEncounterWidgetInstance);
-
-		} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidgetInstance not found")); }
-
-		if (HUDWidgetInstance)
-		{
-			WidgetSwitcher->AddChild(HUDWidgetInstance);
-		} else { UE_LOG(LogTemp, Error, TEXT("HUDWidgetInstance not found")); }
-
-		if (CharSheetWidgetInstance)
-		{
-			WidgetSwitcher->AddChild(CharSheetWidgetInstance);
-		} else { UE_LOG(LogTemp, Error, TEXT("CharSheetWidgetInstance not found")); }
-
-	} else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
-
 }
 
+/*
+ * Add all the created widgets to the widget switcher. If you add something here, 
+ * make sure you also created it in CreateUIWidgets!!!
+ */
+void UUIManager::AddWidgetsToWidgetSwitcher()
+{
+	if (WidgetSwitcher)
+	{
+		AddWidgetToWidgetSwitcher(CharacterCreatorWidgetInstance);
+		AddWidgetToWidgetSwitcher(RPEncounterWidgetInstance);
+		AddWidgetToWidgetSwitcher(HUDWidgetInstance);
+		AddWidgetToWidgetSwitcher(CharSheetWidgetInstance);
+
+	}
+	else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
+}
+
+/*
+ * Add a widget to the widget switcher.
+ * 
+ * INPUT: UUserWidget* WidgetInstanceToAdd: The widget to be added to the WidgetSwitcher
+ */
+void UUIManager::AddWidgetToWidgetSwitcher(UUserWidget* WidgetInstanceToAdd)
+{
+	if (WidgetInstanceToAdd)
+	{
+		WidgetSwitcher->AddChild(WidgetInstanceToAdd);
+
+		UE_LOG(LogTemp, Error, TEXT("%s WOOOOHOOOOO"), *WidgetInstanceToAdd->GetName());
+	}
+	else { UE_LOG(LogTemp, Error, TEXT("%s not found"), *WidgetInstanceToAdd->GetName()); }
+}
+
+/*
+ * 
+ */
 void UUIManager::BindToWidgets()
 {
 	// Char Sheet Button(s) across different HUD widgets
