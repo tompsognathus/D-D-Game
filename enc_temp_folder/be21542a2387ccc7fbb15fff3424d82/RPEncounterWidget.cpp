@@ -71,6 +71,7 @@ void URPEncounterWidget::SetOptionText(int OptionNumber, FText NewOptionText)
 
 void URPEncounterWidget::OnOptionBtn1Clicked()
 {
+	UE_LOG(LogTemp, Display, TEXT("Option 1 Clicked"));
 	if (UIManager)
 	{
 		UIManager->SelectDialogueOption(0);
@@ -79,6 +80,7 @@ void URPEncounterWidget::OnOptionBtn1Clicked()
 
 void URPEncounterWidget::OnOptionBtn2Clicked()
 {
+	UE_LOG(LogTemp, Display, TEXT("Option 2 Clicked"));
 	if (UIManager)
 	{
 		UIManager->SelectDialogueOption(1);
@@ -88,6 +90,7 @@ void URPEncounterWidget::OnOptionBtn2Clicked()
 
 void URPEncounterWidget::OnOptionBtn3Clicked()
 {
+	UE_LOG(LogTemp, Display, TEXT("Option 3 Clicked"));
 	if (UIManager)
 	{
 		UIManager->SelectDialogueOption(2);
@@ -97,6 +100,7 @@ void URPEncounterWidget::OnOptionBtn3Clicked()
 
 void URPEncounterWidget::OnOptionBtn4Clicked()
 {
+	UE_LOG(LogTemp, Display, TEXT("Option 4 Clicked"));
 	if (UIManager)
 	{
 		UIManager->SelectDialogueOption(3);

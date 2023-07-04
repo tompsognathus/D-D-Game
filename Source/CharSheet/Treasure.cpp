@@ -2,6 +2,7 @@
 
 
 #include "Treasure.h"
+#include "Components/ArrowComponent.h"
 
 // Sets default values
 ATreasure::ATreasure()
@@ -11,11 +12,22 @@ ATreasure::ATreasure()
 
 }
 
+void ATreasure::RotateLid()
+{
+	// Rotate lid by rotating the arrow component using RotationSpeed
+	FRotator CurrentRotation = Arrow->GetComponentRotation();
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, FRotator(0.0f, TargetLidAngle, 0.0f), GetWorld()->DeltaTimeSeconds, LidRotationSpeed);
+	Arrow->SetWorldRotation(NewRotation);
+
+}
+
 // Called when the game starts or when spawned
 void ATreasure::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Arrow = FindComponentByClass<UArrowComponent>();
+
 }
 
 // Called every frame
@@ -23,5 +35,33 @@ void ATreasure::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (IsRotating)
+	{
+		RotateLid();
+
+		// If we've reached the target angle, stop rotating
+		if (FMath::IsNearlyEqual(Arrow->GetComponentRotation().Yaw, TargetLidAngle, 1.0f))
+		{
+			// Snap to target rotation
+			FRotator NewRotation = FRotator(0.0f, TargetLidAngle, 0.0f);
+			Arrow->SetWorldRotation(NewRotation);
+
+			IsRotating = false;
+
+			UE_LOG(LogTemp, Display, TEXT("Rotating to %f"), TargetLidAngle);
+		}
+	}
+}
+
+void ATreasure::OpenLid()
+{
+	IsRotating = true;
+	TargetLidAngle = LidOpenAngle;
+}
+
+void ATreasure::CloseLid()
+{
+	IsRotating = true;
+	TargetLidAngle = LidClosedAngle;
 }
 
