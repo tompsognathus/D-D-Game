@@ -51,15 +51,12 @@ void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
 	AActor* Owner = GetOwner();
 	if (Owner)
 	{
-		// Get all mesh components
-		TArray<UStaticMeshComponent*> MeshComponents;
-		Owner->GetComponents<UStaticMeshComponent>(MeshComponents);
-
-		// Set custom depth on all mesh components
-		for (UStaticMeshComponent* MeshComponent : MeshComponents)
+		// Get static mesh component
+		UStaticMeshComponent* StaticMeshComponent = Owner->FindComponentByClass<UStaticMeshComponent>();
+		if (StaticMeshComponent)
 		{
-			MeshComponent->SetRenderCustomDepth(true);
+			StaticMeshComponent->SetRenderCustomDepth(true);
 		}
-
+		else { UE_LOG(LogTemp, Warning, TEXT("Static mesh component not found!")); }
 	} else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
 }
