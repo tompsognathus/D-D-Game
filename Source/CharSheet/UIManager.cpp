@@ -163,6 +163,10 @@ void UUIManager::BindToWidgets()
 	} else { UE_LOG(LogTemp, Error, TEXT("CharSheetWidgetInstance not found")); }
 }
 
+/*
+ * Handle the char sheet button being clicked. Either display the char sheet widget or
+ * return to the previous widget if we're already displaying the char sheet widget.
+ */
 void UUIManager::HandleCharSheetBtnClicked()
 {
 	// If we're in anything other than the char sheet widget, display it
@@ -182,6 +186,11 @@ void UUIManager::HandleCharSheetBtnClicked()
 	}
 }
 
+/*
+ * Use the widget switcher to display a widget on screen
+ * 
+ * INPUT: UUserWidget* WidgetInstanceToDisplay: The widget to be displayed
+ */
 void UUIManager::DisplayWidget(UUserWidget* WidgetInstanceToDisplay)
 {
 	PreviousWidget = Cast<UUserWidget>(WidgetSwitcher->GetActiveWidget());
@@ -193,11 +202,19 @@ void UUIManager::DisplayWidget(UUserWidget* WidgetInstanceToDisplay)
 	else { UE_LOG(LogTemp, Error, TEXT("WidgetSwitcher not found")); }
 }
 
+/*
+ * Display the RP Encounter creator widget
+ */
 void UUIManager::DisplayRPEncounterUIWidget()
 {
 	DisplayWidget(RPEncounterWidgetInstance);
 }
 
+/*
+ * Get a reference to the existing Character Creator Widget
+ * 
+ * RETURNS: UCharacterCreatorWidget*: The character creator widget
+ */
 UCharacterCreatorWidget* UUIManager::GetCharacterCreatorUIWidget()
 {
 	// Get character creator widget from UUserWidget
@@ -213,7 +230,11 @@ UCharacterCreatorWidget* UUIManager::GetCharacterCreatorUIWidget()
 	return FoundCharacterCreatorWidget;
 }
 
-
+/*
+ * Update the main encounter text on the RP Encounter widget
+ * 
+ * INPUT: FText MainText: The text to be displayed
+ */
 void UUIManager::SetRPEncounterBodyText(FText BodyText)
 {
 	URPEncounterWidget* RPEncounterWidget = Cast<URPEncounterWidget>(RPEncounterWidgetInstance);
@@ -224,6 +245,12 @@ void UUIManager::SetRPEncounterBodyText(FText BodyText)
 	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
 }
 
+/*
+ * Update the option text on the RP Encounter widget
+ * 
+ * INPUT: int OptionNumber: The option number to be updated
+ * INPUT: FText NewOptionText: The text to be displayed
+ */
 void UUIManager::SetRPEncounterOptionText(int OptionNumber, FText NewOptionText)
 {
 	URPEncounterWidget* RPEncounterWidget = Cast<URPEncounterWidget>(RPEncounterWidgetInstance);
@@ -251,8 +278,19 @@ void UUIManager::SetRPEncounterOptionText(int OptionNumber, FText NewOptionText)
 	} else { UE_LOG(LogTemp, Error, TEXT("RPEncounterWidget not found")); }
 }
 
+/*
+ * Select one of the available dialogue options and display the next portion of the dialogue
+ * 
+ * INPUT: int OptionNumber: Index of the selected option (1-4)
+ */
 void UUIManager::SelectDialogueOption(int OptionNumber)
 {
+	if (OptionNumber < 1 || OptionNumber > 4)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid option number, must be between 1 and 4"));
+		return;
+	}
+
 	if (GM)
 	{
 		bool HasReachedEndOfDialogue = !(GM->SelectDialogueOption(OptionNumber));
