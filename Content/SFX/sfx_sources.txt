@@ -1,1 +1,2 @@
 treasure_chest_creak 	https://freesound.org/people/TimPryor/sounds/188606/
+coin_spill	https://freesound.org/people/clairinski/sounds/184372/
