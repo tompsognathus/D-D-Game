@@ -30,7 +30,18 @@ public:
 	bool IsHighlightedOnClick = false;
 
 private:
+	bool IsSelected = false;
 
 	UFUNCTION()
 	void OnActorClicked(AActor* ClickedActor, FKey ButtonClicked);
+
+	UFUNCTION()
+	void InteractableSelected();
+
+	UFUNCTION()
+	void InteractableDeselected();
+	
+	UFUNCTION()
+	void SetOutlineVisibility(bool OutlineIsVisible);
+
 };

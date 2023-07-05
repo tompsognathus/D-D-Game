@@ -30,15 +30,42 @@ void UInteractable::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!"));
 	}
-	
 }
 
 
 void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
 {
-	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
+	IsSelected = !IsSelected;
 
-	// Set custom depth on root component to show toon outlines
+	if (IsSelected) { InteractableSelected(); }
+	else { InteractableDeselected(); }
+
+
+
+}
+
+void UInteractable::InteractableSelected()
+{
+	UE_LOG(LogTemp, Display, TEXT("Interactable selected"));
+
+	SetOutlineVisibility(true);
+
+}
+
+void UInteractable::InteractableDeselected()
+{
+	UE_LOG(LogTemp, Display, TEXT("Interactable deselected"));
+
+	SetOutlineVisibility(false);
+}
+
+/*
+ * Sets custom depth on all mesh components to show toon outlines
+ * 
+ * INPUT: bool OutlineIsVisible: whether or not to show the outline
+ */
+void UInteractable::SetOutlineVisibility(bool OutlineIsVisible)
+{
 	if (IsHighlightedOnClick)
 	{
 		AActor* Owner = GetOwner();
@@ -51,10 +78,11 @@ void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
 			// Set custom depth on all mesh components
 			for (UStaticMeshComponent* MeshComponent : MeshComponents)
 			{
-				MeshComponent->SetRenderCustomDepth(true);
+				MeshComponent->SetRenderCustomDepth(OutlineIsVisible);
 			}
 
-		} else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
+		}
+		else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
 	}
 }
 
