@@ -39,16 +39,16 @@ public:
 	/****** Dialogue System Variables ******/
 
 	// Name of this participant, used for GetParticipantName
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Dialogue")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Dialogue)
 	FName DialogueParticipantName;
 
 	// UI name of this participant, what is displayed inside the UI
 	// Used for GetParticipantDisplayName
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Dialogue")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Dialogue)
 	FText DialogueParticipantDisplayName = NSLOCTEXT("ExampleNamespace", "ExampleCharacterName", "ExampleParticipantName");
 
 	// Used for GetParticipantIcon
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Dialogue")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Dialogue)
 	UTexture2D* DialogueParticipantIcon;
 
 	// Context used to control the Dialogue follow
@@ -67,11 +67,11 @@ public:
 	void PopulateDialogueOptionsText();
 
 	// Character's dialogue assets
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Dialogue)
 	TArray<UDlgDialogue*> Dialogues;
 
 	// Character's dialogue participants
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Dialogue)
 	TArray<UObject*> Participants;
 
 

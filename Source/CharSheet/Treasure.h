@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
+#include "Interactable.h"
+
 #include "Treasure.generated.h"
 
 UCLASS()
@@ -39,6 +42,10 @@ public:
 
 	void OpenLid();
 	void CloseLid();
+
+	// Interactable interface
+	void HandleInteractableClicked();
+
 
 private:
 	bool IsRotating = false;

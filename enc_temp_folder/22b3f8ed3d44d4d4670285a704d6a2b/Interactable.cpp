@@ -34,27 +34,31 @@ void UInteractable::BeginPlay()
 }
 
 
+// Called every frame
+void UInteractable::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// ...
+}
+
 void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
 {
 	UE_LOG(LogTemp, Display, TEXT("Interactable clicked"));
 
 	// Set custom depth on root component to show toon outlines
-	if (IsHighlightedOnClick)
+	AActor* Owner = GetOwner();
+	if (Owner)
 	{
-		AActor* Owner = GetOwner();
-		if (Owner)
+		// Get all mesh components
+		TArray<UStaticMeshComponent*> MeshComponents;
+		Owner->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+		// Set custom depth on all mesh components
+		for (UStaticMeshComponent* MeshComponent : MeshComponents)
 		{
-			// Get all mesh components
-			TArray<UStaticMeshComponent*> MeshComponents;
-			Owner->GetComponents<UStaticMeshComponent>(MeshComponents);
+			MeshComponent->SetRenderCustomDepth(true);
+		}
 
-			// Set custom depth on all mesh components
-			for (UStaticMeshComponent* MeshComponent : MeshComponents)
-			{
-				MeshComponent->SetRenderCustomDepth(true);
-			}
-
-		} else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
-	}
+	} else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
 }
-

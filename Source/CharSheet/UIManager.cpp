@@ -104,8 +104,6 @@ void UUIManager::AddWidgetToWidgetSwitcher(UUserWidget* WidgetInstanceToAdd)
 	if (WidgetInstanceToAdd)
 	{
 		WidgetSwitcher->AddChild(WidgetInstanceToAdd);
-
-		UE_LOG(LogTemp, Error, TEXT("%s WOOOOHOOOOO"), *WidgetInstanceToAdd->GetName());
 	}
 	else { UE_LOG(LogTemp, Error, TEXT("%s not found"), *WidgetInstanceToAdd->GetName()); }
 }
@@ -285,7 +283,7 @@ void UUIManager::SetRPEncounterOptionText(int OptionNumber, FText NewOptionText)
  */
 void UUIManager::SelectDialogueOption(int OptionNumber)
 {
-	if (OptionNumber < 1 || OptionNumber > 4)
+	if (OptionNumber < 0 || OptionNumber > 3)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Invalid option number, must be between 1 and 4"));
 		return;

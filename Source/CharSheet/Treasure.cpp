@@ -3,6 +3,7 @@
 
 #include "Treasure.h"
 #include "Components/ArrowComponent.h"
+#include "Interactable.h"
 
 // Sets default values
 ATreasure::ATreasure()
@@ -24,9 +25,8 @@ void ATreasure::RotateLid()
 void ATreasure::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	Arrow = FindComponentByClass<UArrowComponent>();
 
+	Arrow = FindComponentByClass<UArrowComponent>();
 }
 
 // Called every frame
@@ -62,5 +62,27 @@ void ATreasure::CloseLid()
 {
 	IsRotating = true;
 	TargetLidAngle = LidClosedAngle;
+}
+
+void ATreasure::HandleInteractableClicked()
+{
+	UE_LOG(LogTemp, Display, TEXT("Treasure clicked"));
+
+	// Get owner actor
+	AActor* OwnerActor = GetOwner();
+
+	if (OwnerActor)
+	{
+		// Set custom depth on root component to show toon outlines
+		// Get all mesh components
+		TArray<UStaticMeshComponent*> MeshComponents;
+		OwnerActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+		// Set custom depth on all mesh components
+		for (UStaticMeshComponent* MeshComponent : MeshComponents)
+		{
+			MeshComponent->SetRenderCustomDepth(true);
+		}
+	} else { UE_LOG(LogTemp, Error, TEXT("Cannot find treasure owner actor")); }
 }
 

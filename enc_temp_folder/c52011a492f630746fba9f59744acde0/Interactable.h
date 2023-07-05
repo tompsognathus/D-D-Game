@@ -25,12 +25,11 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable")
-	bool IsHighlightedOnClick = false;
+public:	
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-
 	UFUNCTION()
 	void OnActorClicked(AActor* ClickedActor, FKey ButtonClicked);
 };
