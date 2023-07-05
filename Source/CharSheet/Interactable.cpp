@@ -39,9 +39,6 @@ void UInteractable::OnActorClicked(AActor* ClickedActor, FKey ButtonClicked)
 
 	if (IsSelected) { InteractableSelected(); }
 	else { InteractableDeselected(); }
-
-
-
 }
 
 void UInteractable::InteractableSelected()
@@ -80,7 +77,6 @@ void UInteractable::SetOutlineVisibility(bool OutlineIsVisible)
 			{
 				MeshComponent->SetRenderCustomDepth(OutlineIsVisible);
 			}
-
 		}
 		else { UE_LOG(LogTemp, Warning, TEXT("Owner actor not found!")); }
 	}

@@ -29,8 +29,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable")
 	bool IsHighlightedOnClick = false;
 
-private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
 	bool IsSelected = false;
+
+private:
 
 	UFUNCTION()
 	void OnActorClicked(AActor* ClickedActor, FKey ButtonClicked);
