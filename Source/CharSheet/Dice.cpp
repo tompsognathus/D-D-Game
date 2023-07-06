@@ -1,0 +1,33 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Dice.h"
+
+// Sets default values
+ADice::ADice()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+// Called when the game starts or when spawned
+void ADice::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	// get a reference to the static mesh component from actor
+	DiceMesh = Cast<UStaticMeshComponent>(GetComponentByClass(UStaticMeshComponent::StaticClass()));
+
+	if (DiceMesh)
+	{
+		UE_LOG(LogTemp, Display, TEXT("DiceMesh found!"));
+	} else { UE_LOG(LogTemp, Error, TEXT("DiceMesh not found!")); }
+}
+
+// Called every frame
+void ADice::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
