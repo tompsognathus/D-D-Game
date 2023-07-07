@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UArrowComponent* Arrow;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool IsOpen = false;
+
 	void OpenLid();
 	void CloseLid();
 

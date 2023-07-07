@@ -23,11 +23,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dice")
-	int NumFaces;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dice")
-	float GravityStrength = 9.81f;
-
-	UStaticMeshComponent* DiceMesh;
 };
